@@ -9,7 +9,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
     <>
       <section className="product-card">
         <img
-          key="photo"
           alt="product photo"
           src={product.photos[0]}
           className="product-photo"
