@@ -12,16 +12,18 @@ export type Product = {
   price: number;
 };
 
+export type Order = {
+  id: number;
+  productName: string;
+  date: string;
+  quantity: number;
+  adress: string;
+};
+
 export type User = {
   name: string;
   password: string;
-  orders: {
-    id: number;
-    productName: string;
-    date: string;
-    quantity: number;
-    adress: string;
-  }[];
+  orders: Order[];
   favorites: number[];
   shoppingCart: {
     productName: string;
