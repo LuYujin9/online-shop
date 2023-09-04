@@ -1,4 +1,4 @@
-const User = () => {
+const User: React.FC = () => {
   return (
     <>
       <p>User</p>

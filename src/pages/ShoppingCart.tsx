@@ -1,4 +1,4 @@
-const ShoppingCart = () => {
+const ShoppingCart: React.FC = () => {
   return (
     <>
       <p>Shopping Cart</p>
