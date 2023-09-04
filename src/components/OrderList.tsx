@@ -1,4 +1,3 @@
-import React from "react";
 import { Order } from "./global.type";
 type OrderListProps = {
   orders: Order[] | undefined;
