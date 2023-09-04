@@ -19,25 +19,25 @@ const Header = ({ handleGoBack }: HeaderProps) => {
       </button>
       <h1>Handmade Shop</h1>
       <nav>
-        <NavLink activeClassName="active-link" className="header-link" to="/">
+        <NavLink activeclassname="active-link" className="header-link" to="/">
           <FiHome />
         </NavLink>
         <NavLink
-          activeClassName="active-link"
+          activeclassname="active-link"
           className="header-link"
           to="/shopping-cart"
         >
           <FiShoppingCart />
         </NavLink>
         <NavLink
-          activeClassName="active-link"
+          activeclassname="active-link"
           className="header-link"
           to="/favorite"
         >
           <FiStar />
         </NavLink>
         <NavLink
-          activeClassName="active-link"
+          activeclassname="active-link"
           className="header-link"
           to="/user"
         >
