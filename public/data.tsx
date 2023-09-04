@@ -2,8 +2,6 @@ export const products = [
   {
     id: 1,
     name: "Produkt 1",
-    colors: ["Rot", "Blau", "Grün"],
-    sizes: ["S", "M", "L"],
     description:
       "Eine detaillierte Beschreibung dieses tollen Produkts. Dieses Produkt hat viele großartige Funktionen und Vorteile. Es ist in verschiedenen Farben und Größen erhältlich.",
     stock: 10,
@@ -16,8 +14,6 @@ export const products = [
   {
     id: 2,
     name: "Produkt 2",
-    colors: ["Schwarz", "Weiß"],
-    sizes: ["M", "L", "XL"],
     description:
       "Eine ausführliche Beschreibung dieses großartigen Produkts. Dieses Produkt ist in Schwarz und Weiß erhältlich und hat eine bequeme Passform.",
     stock: 5,
@@ -30,8 +26,6 @@ export const products = [
   {
     id: 3,
     name: "Produkt 3",
-    colors: ["Gelb", "Orange", "Pink"],
-    sizes: ["S", "M", "L", "XL"],
     description:
       "Eine umfassende Beschreibung dieses fantastischen Produkts. Es ist in verschiedenen lebendigen Farben und Größen erhältlich, um Ihren Bedürfnissen gerecht zu werden.",
     stock: 20,
@@ -40,5 +34,51 @@ export const products = [
     isInShoppingCart: false,
     photos: ["/images/product3-1.jpg", "/images/product3-2.jpg"],
     price: 29.99,
+  },
+];
+
+export const users = [
+  {
+    name: "Jin",
+    password: "123456",
+    orders: [
+      {
+        id: 2,
+        quantity: 1,
+        adress: "putlse.ejfiaefanafe,19938 ",
+      },
+    ],
+    favorites: [1, 2],
+    shoppingCart: [
+      {
+        id: 2,
+        quantity: 1,
+      },
+      {
+        id: 1,
+        quantity: 1,
+      },
+    ],
+  },
+  {
+    name: "Jin",
+    orders: [
+      {
+        id: 1,
+        quantity: 1,
+        adress: "putlse.ejafe,938 ",
+      },
+      {
+        id: 1,
+        quantity: 1,
+      },
+    ],
+    favorites: [1, 2],
+    shoppingCart: [
+      {
+        id: 2,
+        quantity: 1,
+      },
+    ],
   },
 ];
