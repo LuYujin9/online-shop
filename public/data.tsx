@@ -43,40 +43,48 @@ export const users = [
     password: "123456",
     orders: [
       {
-        id: 2,
-        quantity: 1,
-        adress: "putlse.ejfiaefanafe,19938 ",
+        id: 1,
+        productName: "Produkt 3",
+        date: "23.09.2023",
+        quantity: 3,
+        adress: "putlse.ejafe,938 ",
       },
     ],
     favorites: [1, 2],
     shoppingCart: [
       {
-        id: 2,
+        productName: "Produkt 1",
         quantity: 1,
       },
       {
-        id: 1,
+        productName: "Produkt 2",
         quantity: 1,
       },
     ],
   },
   {
-    name: "Jin",
+    name: "Jane",
+    password: "1",
     orders: [
       {
         id: 1,
+        productName: "Produkt 1",
+        date: "08.09.2023",
         quantity: 1,
         adress: "putlse.ejafe,938 ",
       },
       {
-        id: 1,
-        quantity: 1,
+        id: 2,
+        productName: "Produkt 2",
+        date: "08.07.2023",
+        quantity: 2,
+        adress: "putlse.ejafe,938 ",
       },
     ],
     favorites: [1, 2],
     shoppingCart: [
       {
-        id: 2,
+        productName: "Produkt 2",
         quantity: 1,
       },
     ],
