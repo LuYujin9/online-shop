@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { users } from "../../public/data";
 import { User } from "../components/global.type";
 import OrderList from "../components/OrderList";
