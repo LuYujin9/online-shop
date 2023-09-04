@@ -1,4 +1,4 @@
-import { Product } from "../data.type";
+import { Product } from "../Product.type";
 
 type ProductCardProps = {
   product: Product;
@@ -7,11 +7,15 @@ type ProductCardProps = {
 const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <>
-      <section>
-        {product.photos.map((photo) => (
-          <img key="photo" alt="product photos" src={photo} />
-        ))}
-        <h3>{product.name}</h3>
+      <section className="product-card">
+        <img
+          key="photo"
+          alt="product photo"
+          src={product.photos[0]}
+          className="product-photo"
+        />
+
+        <h4>{product.name}</h4>
         <p>{product.price}</p>
       </section>
     </>
