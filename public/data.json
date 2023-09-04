@@ -8,7 +8,8 @@
     "comments": ["Gutes Produkt", "Sehr zufrieden"],
     "isFavorite": true,
     "isInShoppingCart": false,
-    "photos": ["/images/product1-1.jpg", "/images/product1-1.jpg"]
+    "photos": ["/images/product1-1.jpg", "/images/product1-1.jpg"],
+    "price": 10
   },
   {
     "name": "Produkt 2",
@@ -19,7 +20,8 @@
     "comments": ["Sehr empfehlenswert"],
     "isFavorite": false,
     "isInShoppingCart": true,
-    "photos": ["/images/product2-1.jpg"]
+    "photos": ["/images/product2-1.jpg"],
+    "price": 20
   },
   {
     "name": "Produkt 3",
@@ -30,6 +32,7 @@
     "comments": [],
     "isFavorite": true,
     "isInShoppingCart": false,
-    "photos": ["/images/product3-1.jpg", "/images/product3-2.jpg"]
+    "photos": ["/images/product3-1.jpg", "/images/product3-2.jpg"],
+    "price": 30
   }
 ]
