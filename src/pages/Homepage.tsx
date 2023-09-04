@@ -1,4 +1,5 @@
-import ProductCardList from "../components/ProductCard/ProductCardList";
+import React from "react";
+import ProductCardList from "../components/ProductCardList/ProductCardList";
 import { products } from "../../public/data";
 
 const Homepage: React.FC = () => {

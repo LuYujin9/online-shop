@@ -1,4 +1,4 @@
-import { Product } from "../Product.type";
+import { Product } from "../global.type";
 
 type ProductCardProps = {
   product: Product;
