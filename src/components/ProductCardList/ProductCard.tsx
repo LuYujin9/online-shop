@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { Product } from "../global.type";
 
 type ProductCardProps = {
@@ -6,7 +7,7 @@ type ProductCardProps = {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   return (
-    <>
+    <NavLink to={`/${product.id}`}>
       <section className="product-card">
         <img
           alt="product photo"
@@ -17,7 +18,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <h4>{product.name}</h4>
         <p>{product.price}</p>
       </section>
-    </>
+    </NavLink>
   );
 };
 
