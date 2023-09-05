@@ -1,9 +1,9 @@
 import ProductCard from "./ProductCard";
-import { Product } from "../global.type";
+import { Product, User } from "../global.type";
 
 type ProductCardListProps = {
   products: Product[];
-  user: object | null;
+  user: User | null;
 };
 
 const ProductCardList = ({ products, user }: ProductCardListProps) => {
