@@ -6,6 +6,10 @@ type ProductCardListProps = {
 };
 
 const ProductCardList = ({ products }: ProductCardListProps) => {
+  if (products.length === 0) {
+    return <p>Sie haben noch keine gespeicherte Waren.</p>;
+  }
+
   return (
     <>
       {products.map((product) => (
