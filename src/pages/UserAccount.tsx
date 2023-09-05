@@ -1,14 +1,27 @@
-import React, { useRef, useState, useEffect } from "react";
-import { users } from "../../public/data";
-import { User } from "../components/global.type";
+import { useRef, useEffect } from "react";
 import OrderList from "../components/OrderList";
+import { User } from "../components/global.type";
 
-const UserAccount: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isShowMessage, setIsShowMessage] = useState(false);
+type UserAccountProps = {
+  user: User | null;
+  isLoggedIn: boolean;
+  isShowMessage: boolean;
+  onLogin: (newUserData: { [k: string]: FormDataEntryValue }) => void;
+  onLogout: () => void;
+};
+
+const UserAccount: React.FC<UserAccountProps> = ({
+  user,
+  isLoggedIn,
+  isShowMessage,
+  onLogin,
+  onLogout,
+}) => {
   const elementRef = useRef<HTMLDivElement | null>(null);
-  const [user, setUser] = useState<User | null>(null);
-
+  console.log(isLoggedIn);
+  console.log(isShowMessage);
+  console.log(onLogin);
+  console.log(onLogout);
   useEffect(() => {
     const divElement = elementRef.current;
     console.log(divElement);
@@ -18,32 +31,7 @@ const UserAccount: React.FC = () => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
     const newUserData = Object.fromEntries(formData);
-    console.log(newUserData);
-    const user = users.find(
-      (user) =>
-        /*   console.log("user.name", user.name);
-      console.log("user.password", user.password);
-      console.log("newUserData.userName", newUserData.userName);
-      console.log("newUserData.password", newUserData.password); */
-        user.name == newUserData.userName &&
-        user.password == newUserData.password
-    );
-    console.log(user);
-    if (user) {
-      setUser(user);
-      setIsLoggedIn(true);
-      setIsShowMessage(false);
-    } else {
-      setIsShowMessage(true);
-    }
-  };
-
-  // const CurrentUser = { userName: userName, password: password };
-  // console.log(CurrentUser);
-  const handleLogout = () => {
-    setUser(null);
-    setIsLoggedIn(false);
-    setIsShowMessage(false);
+    onLogin(newUserData);
   };
 
   return (
@@ -51,7 +39,7 @@ const UserAccount: React.FC = () => {
       {isLoggedIn ? (
         <div ref={elementRef}>
           <p>{user?.name}</p>
-          <button onClick={handleLogout}>Abmelden</button>
+          <button onClick={onLogout}>Abmelden</button>
           <OrderList orders={user?.orders} />
         </div>
       ) : (

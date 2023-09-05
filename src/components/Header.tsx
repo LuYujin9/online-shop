@@ -1,4 +1,3 @@
-import React from "react";
 import {
   FiChevronLeft,
   FiHome,
@@ -40,7 +39,7 @@ const Header = ({ handleGoBack }: HeaderProps) => {
         <NavLink
           activeclassname="active-link"
           className="header-link"
-          to="/user"
+          to="/user-account"
         >
           <FiUser />
         </NavLink>

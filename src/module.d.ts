@@ -9,6 +9,5 @@ declare module "react-router-dom" {
 
 declare module "../data" {
   export const products: Product[];
-
   export const users: User[];
 }
