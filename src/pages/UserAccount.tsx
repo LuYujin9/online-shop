@@ -18,10 +18,6 @@ const UserAccount: React.FC<UserAccountProps> = ({
   onLogout,
 }) => {
   const elementRef = useRef<HTMLDivElement | null>(null);
-  console.log(isLoggedIn);
-  console.log(isShowMessage);
-  console.log(onLogin);
-  console.log(onLogout);
   useEffect(() => {
     const divElement = elementRef.current;
     console.log(divElement);

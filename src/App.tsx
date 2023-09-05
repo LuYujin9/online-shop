@@ -60,7 +60,7 @@ function App() {
             />
           }
         />
-        <Route path="/:id" element={<Details />} />
+        <Route path="/:id" element={<Details user={user} />} />
       </Routes>
     </>
   );

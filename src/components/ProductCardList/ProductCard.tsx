@@ -19,7 +19,6 @@ const ProductCard = ({ product, user }: ProductCardProps) => {
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
-    console.log("click", isFavorite);
   };
 
   return (

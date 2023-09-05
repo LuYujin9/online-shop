@@ -10,7 +10,6 @@ type HomepageProps = {
 const Homepage: React.FC<HomepageProps> = ({ user }) => {
   return (
     <>
-      <p>Homepage</p>
       <ProductCardList products={products} user={user} />;
     </>
   );
