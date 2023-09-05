@@ -46,21 +46,29 @@ function App() {
     <>
       <Header />
       <Routes>
-        <Route path="/" Component={Homepage} />
-        <Route path="/shopping-cart" Component={ShoppingCart} />
-        <Route path="/favorite" Component={Favorite} />
-        <Route path="/user" render={(routeProps) => (<UserAccount {...routeProps}  user={user}
-  isLoggedIn={isLoggedIn}
-  isShowMessage={isShowMessage}
-  onLogin={hangdleLogin}
-  onLogout={hangdleLogout}/>))/>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/shopping-cart" element={<ShoppingCart />} />
+        <Route path="/favorite" element={<Favorite />} />
+        <Route
+          path="/user-account"
+          element={
+            <UserAccount
+              user={user}
+              isLoggedIn={isLoggedIn}
+              isShowMessage={isShowMessage}
+              onLogin={hangdleLogin}
+              onLogout={hangdleLogout}
+            />
+          }
+        />
       </Routes>
     </>
   );
 }
 export default App;
 
-{/* <Route path="/user">
+{
+  /* <Route path="/user">
 <UserAccount
   user={user}
   isLoggedIn={isLoggedIn}
@@ -68,4 +76,5 @@ export default App;
   onLogin={hangdleLogin}
   onLogout={hangdleLogout}
 />
-</Route> */}
+</Route> */
+}
