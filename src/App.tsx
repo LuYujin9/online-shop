@@ -6,6 +6,7 @@ import Homepage from "./pages/Homepage";
 import ShoppingCart from "./pages/ShoppingCart";
 import Favorite from "./pages/Favorite";
 import UserAccount from "./pages/UserAccount";
+import Details from "./pages/[id]";
 import { users } from "../public/data";
 import { User } from "./components/global.type";
 
@@ -59,6 +60,7 @@ function App() {
             />
           }
         />
+        <Route path="/:id" element={<Details />} />
       </Routes>
     </>
   );
