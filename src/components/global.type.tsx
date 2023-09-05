@@ -16,6 +16,12 @@ export type Order = {
   adress: string;
 };
 
+export type ShoppingCartItem = {
+  productId: string;
+  productName: string;
+  quantity: number;
+};
+
 export type User = {
   name: string;
   password: string;
@@ -27,7 +33,8 @@ export type User = {
     adress: string;
   }[];
   favorites: string[];
-  shoppingCart: {
+  ShoppingCartItems: {
+    productId: string;
     productName: string;
     quantity: number;
   }[];
