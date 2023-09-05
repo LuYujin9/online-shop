@@ -43,7 +43,7 @@ export const users = [
     password: "123456",
     orders: [
       {
-        id: 1,
+        id: "1",
         productName: "Produkt 3",
         date: "23.09.2023",
         quantity: 3,
@@ -77,7 +77,7 @@ export const users = [
         id: "2",
         productName: "Produkt 2",
         date: "08.07.2023",
-        quantity: "2",
+        quantity: 2,
         adress: "putlse.ejafe,938 ",
       },
     ],

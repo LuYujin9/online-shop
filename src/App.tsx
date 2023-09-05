@@ -1,4 +1,3 @@
-//import { useState } from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { useState } from "react";
@@ -10,7 +9,6 @@ import UserAccount from "./pages/UserAccount";
 import { users } from "../public/data";
 import { User } from "./components/global.type";
 
-type users = User[];
 type newUserData = {
   [k: string]: FormDataEntryValue;
 };
@@ -66,15 +64,3 @@ function App() {
   );
 }
 export default App;
-
-{
-  /* <Route path="/user">
-<UserAccount
-  user={user}
-  isLoggedIn={isLoggedIn}
-  isShowMessage={isShowMessage}
-  onLogin={hangdleLogin}
-  onLogout={hangdleLogout}
-/>
-</Route> */
-}
