@@ -1,5 +1,5 @@
 export type Product = {
-  id: number;
+  id: string;
   name: string;
   description: string;
   stock: number;
@@ -11,7 +11,7 @@ export type Product = {
 };
 
 export type Order = {
-  id: number;
+  id: string;
   productName: string;
   date: string;
   quantity: number;
@@ -22,13 +22,13 @@ export type User = {
   name: string;
   password: string;
   orders: {
-    id: number;
+    id: string;
     productName: string;
     date: string;
     quantity: number;
     adress: string;
   }[];
-  favorites: number[];
+  favorites: string[];
   shoppingCart: {
     productName: string;
     quantity: number;
