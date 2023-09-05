@@ -46,7 +46,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/shopping-cart" element={<ShoppingCart />} />
-        <Route path="/favorite" element={<Favorite />} />
+        <Route path="/favorite" element={<Favorite user={user} />} />
         <Route
           path="/user-account"
           element={
