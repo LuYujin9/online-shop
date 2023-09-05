@@ -4,8 +4,6 @@ export type Product = {
   description: string;
   stock: number;
   comments: string[];
-  isFavorite: boolean;
-  isInShoppingCart: boolean;
   photos: string[];
   price: number;
 };

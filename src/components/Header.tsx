@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
   FiChevronLeft,
   FiHome,
@@ -7,14 +8,12 @@ import {
 } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
 
-type HeaderProps = {
-  handleGoBack?: () => void;
-};
+const Header = () => {
+  const navigate = useNavigate();
 
-const Header = ({ handleGoBack }: HeaderProps) => {
   return (
     <header>
-      <button onClick={handleGoBack}>
+      <button onClick={() => navigate(-1)}>
         <FiChevronLeft />
       </button>
       <h1>Handmade Shop</h1>

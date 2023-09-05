@@ -1,6 +1,6 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
 import { useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Homepage from "./pages/Homepage";
 import ShoppingCart from "./pages/ShoppingCart";
@@ -45,7 +45,7 @@ function App() {
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<Homepage />} />
+        <Route path="/" element={<Homepage user={user} />} />
         <Route path="/shopping-cart" element={<ShoppingCart />} />
         <Route path="/favorite" element={<Favorite user={user} />} />
         <Route
@@ -60,7 +60,7 @@ function App() {
             />
           }
         />
-        <Route path="/:id" element={<Details />} />
+        <Route path="/:id" element={<Details user={user} />} />
       </Routes>
     </>
   );

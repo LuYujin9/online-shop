@@ -46,3 +46,8 @@ nav {
   height: 8em;
   background-color: wheat;
 }
+
+/* style of components */
+.aktive-favorite-button {
+  background-color: pink;
+}

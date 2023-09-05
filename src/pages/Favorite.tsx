@@ -13,7 +13,7 @@ const Favorite: React.FC<FavoriteProps> = ({ user }) => {
   );
   return (
     <>
-      <ProductCardList products={favoriteProducts} />
+      <ProductCardList products={favoriteProducts} user={user} />
     </>
   );
 };
