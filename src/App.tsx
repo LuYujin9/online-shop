@@ -45,7 +45,7 @@ function App() {
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<Homepage />} />
+        <Route path="/" element={<Homepage user={user} />} />
         <Route path="/shopping-cart" element={<ShoppingCart />} />
         <Route path="/favorite" element={<Favorite user={user} />} />
         <Route
