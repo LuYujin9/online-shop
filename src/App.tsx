@@ -46,7 +46,10 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Homepage user={user} />} />
-        <Route path="/shopping-cart" element={<ShoppingCart />} />
+        <Route
+          path="/shopping-cart"
+          element={<ShoppingCart shoppingCartItems={user?.shoppingCartItems} />}
+        />
         <Route path="/favorite" element={<Favorite user={user} />} />
         <Route
           path="/user-account"

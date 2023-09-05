@@ -125,9 +125,19 @@ export const users = [
       },
     ],
     favorites: ["1", "2"],
-    ShoppingCartItems: [
-      { productId: "1", productName: "Produkt 1", quantity: 1 },
-      { productId: "2", productName: "Produkt 2", quantity: 1 },
+    shoppingCartItems: [
+      {
+        productId: "1",
+        productName: "Produkt 1",
+        photo: "/images/product1-1.jpg",
+        quantity: 1,
+      },
+      {
+        productId: "2",
+        productName: "Produkt 2",
+        photo: "/images/product2-1.jpg",
+        quantity: 1,
+      },
     ],
   },
   {
@@ -150,8 +160,13 @@ export const users = [
       },
     ],
     favorites: ["1", "2"],
-    ShoppingCartItems: [
-      { productId: "10", productName: "Produkt 10", quantity: 1 },
+    shoppingCartItems: [
+      {
+        productId: "10",
+        productName: "Produkt 10",
+        photo: "/images/product10-1.jpg",
+        quantity: 1,
+      },
     ],
   },
 ];
