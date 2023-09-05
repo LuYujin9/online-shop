@@ -1,4 +1,3 @@
-import { useRef, useEffect } from "react";
 import OrderList from "../components/OrderList";
 import { User } from "../components/global.type";
 
@@ -17,12 +16,6 @@ const UserAccount: React.FC<UserAccountProps> = ({
   onLogin,
   onLogout,
 }) => {
-  const elementRef = useRef<HTMLDivElement | null>(null);
-  useEffect(() => {
-    const divElement = elementRef.current;
-    console.log(divElement);
-  }, []);
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
@@ -33,7 +26,7 @@ const UserAccount: React.FC<UserAccountProps> = ({
   return (
     <>
       {isLoggedIn ? (
-        <div ref={elementRef}>
+        <div>
           <p>{user?.name}</p>
           <button onClick={onLogout}>Abmelden</button>
           <OrderList orders={user?.orders} />
