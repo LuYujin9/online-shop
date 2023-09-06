@@ -125,13 +125,17 @@ export const users = [
       },
     ],
     favorites: ["1", "2"],
-    shoppingCart: [
+    shoppingCartItems: [
       {
+        productId: "1",
         productName: "Produkt 1",
+        photo: "/images/product1-1.jpg",
         quantity: 1,
       },
       {
+        productId: "2",
         productName: "Produkt 2",
+        photo: "/images/product2-1.jpg",
         quantity: 1,
       },
     ],
@@ -156,9 +160,11 @@ export const users = [
       },
     ],
     favorites: ["1", "2"],
-    shoppingCart: [
+    shoppingCartItems: [
       {
-        productName: "Produkt 2",
+        productId: "10",
+        productName: "Produkt 10",
+        photo: "/images/product10-1.jpg",
         quantity: 1,
       },
     ],
