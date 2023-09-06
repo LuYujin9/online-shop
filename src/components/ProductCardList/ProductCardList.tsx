@@ -1,20 +1,24 @@
 import ProductCard from "./ProductCard";
-import { Product, User } from "../global.type";
+import { Product } from "../global.type";
 
 type ProductCardListProps = {
   products: Product[];
-  user: User | null;
+  userName: string | null;
 };
 
-const ProductCardList = ({ products, user }: ProductCardListProps) => {
+const ProductCardList = ({ products, userName }: ProductCardListProps) => {
   if (products.length === 0) {
-    return <p>Sie haben noch keine gespeicherte Waren.</p>;
+    return (
+      <p>
+        Sie haben noch keine gespeicherte Waren oder sich noch nicht angemeldet.
+      </p>
+    );
   }
 
   return (
     <>
       {products.map((product) => (
-        <ProductCard key={product.id} product={product} user={user} />
+        <ProductCard key={product.id} product={product} userName={userName} />
       ))}
     </>
   );

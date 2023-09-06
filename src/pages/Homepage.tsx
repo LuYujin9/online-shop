@@ -1,16 +1,15 @@
 import React from "react";
-import { User } from "../components/global.type";
 import ProductCardList from "../components/ProductCardList/ProductCardList";
 import { products } from "../../public/data";
 
 type HomepageProps = {
-  user: User | null;
+  userName: string | null;
 };
 
-const Homepage: React.FC<HomepageProps> = ({ user }) => {
+const Homepage: React.FC<HomepageProps> = ({ userName }) => {
   return (
     <>
-      <ProductCardList products={products} user={user} />;
+      <ProductCardList products={products} userName={userName} />;
     </>
   );
 };

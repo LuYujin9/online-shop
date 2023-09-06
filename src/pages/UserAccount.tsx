@@ -56,10 +56,6 @@ const UserAccount: React.FC<UserAccountProps> = ({
     }
   };
 
-  const handlePassword: React.ChangeEventHandler<HTMLInputElement> = () => {
-    //setRegisterPassword(event.target.value);
-  };
-
   const handleRegister: React.MouseEventHandler<HTMLButtonElement> = (
     event
   ) => {
@@ -118,7 +114,6 @@ const UserAccount: React.FC<UserAccountProps> = ({
                   name="password"
                   id="new-password"
                   ref={registerPasswordRef}
-                  onChange={handlePassword}
                   required
                 />
                 <button

@@ -20,6 +20,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userPageMessage, setUserPageMessage] = useState("");
   const [user, setUser] = useState<User | null>(null);
+  const [userName, setUserName] = useState<string | null>("");
   const users: users | null = useReadLocalStorage("users");
 
   const hangdleLogin = (newUserData: newUserData) => {
@@ -31,6 +32,7 @@ function App() {
 
     if (user) {
       setUser(user);
+      setUserName(user.name);
       setIsLoggedIn(true);
       setUserPageMessage("");
     } else {
@@ -41,7 +43,7 @@ function App() {
   };
 
   const hangdleLogout = () => {
-    setUser(null);
+    setUserName(null);
     setIsLoggedIn(false);
     setUserPageMessage("");
   };
@@ -50,7 +52,7 @@ function App() {
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<Homepage user={user} />} />
+        <Route path="/" element={<Homepage userName={userName} />} />
         <Route
           path="/shopping-cart"
           element={<ShoppingCart shoppingCartItems={user?.shoppingCartItems} />}
