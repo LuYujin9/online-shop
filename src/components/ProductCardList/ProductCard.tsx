@@ -3,6 +3,7 @@ import { useReadLocalStorage } from "usehooks-ts";
 import { NavLink } from "react-router-dom";
 import FavoriteButton from "../BookmarkButton";
 import { Product, User } from "../global.type";
+import AddToCartButton from "../AddToCartButton";
 
 type ProductCardProps = {
   product: Product;
@@ -12,12 +13,14 @@ type ProductCardProps = {
     isFavorite: boolean,
     user: User | undefined
   ) => void;
+  handleShopping: (id: string, product: Product) => void;
 };
 
 const ProductCard = ({
   product,
   userName,
   handleFavorite,
+  handleShopping,
 }: ProductCardProps) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [user, setUser] = useState<User | undefined>(undefined);
@@ -37,9 +40,14 @@ const ProductCard = ({
     handleFavorite(product.id, isFavorite, user);
   };
 
+  const handleAddToCart = () => {
+    if (user) handleShopping(product.id, product);
+  };
+
   return (
     <>
       <FavoriteButton isFavorite={isFavorite} toggleFavorite={toggleFavorite} />
+      <AddToCartButton handleAddToCart={handleAddToCart} />
       <NavLink to={`/${product.id}`}>
         <section className="product-card">
           <img

@@ -19,6 +19,14 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ userName }) => {
     setShoppingCartItems(shoppingCartItems);
   }, [users, userName, shoppingCartItems]);
 
+  if (shoppingCartItems?.length === 0) {
+    return (
+      <p>
+        Sie haben noch keine gespeicherte Waren oder sich noch nicht angemeldet.
+      </p>
+    );
+  }
+
   return (
     <>
       <p>Shopping Cart</p>

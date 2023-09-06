@@ -9,21 +9,15 @@ type ProductCardListProps = {
     isFavorite: boolean,
     user: User | undefined
   ) => void;
+  handleShopping: (id: string, product: Product) => void;
 };
 
 const ProductCardList = ({
   products,
   userName,
   handleFavorite,
+  handleShopping,
 }: ProductCardListProps) => {
-  if (products?.length === 0) {
-    return (
-      <p>
-        Sie haben noch keine gespeicherte Waren oder sich noch nicht angemeldet.
-      </p>
-    );
-  }
-
   return (
     <>
       {products?.map((product) => (
@@ -32,6 +26,7 @@ const ProductCardList = ({
           product={product}
           userName={userName}
           handleFavorite={handleFavorite}
+          handleShopping={handleShopping}
         />
       ))}
     </>

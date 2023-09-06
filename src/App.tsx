@@ -8,7 +8,7 @@ import ShoppingCart from "./pages/ShoppingCart";
 import Favorite from "./pages/Favorite";
 import UserAccount from "./pages/UserAccount";
 import Details from "./pages/[id]";
-import { User } from "./components/global.type";
+import { User, Product } from "./components/global.type";
 
 type newUserData = {
   [k: string]: FormDataEntryValue;
@@ -67,6 +67,37 @@ function App() {
     }
   };
 
+  const handleShopping = (id: string, product: Product) => {
+    const user = users?.find((user) => user.name == userName);
+    console.log("id", id);
+    if (user) {
+      console.log("user", user.shoppingCartItems);
+      const newItem = {
+        productId: id,
+        productName: product.name,
+        photo: product.photos[1],
+        quantity: 1,
+      };
+
+      const filteredItems = user.shoppingCartItems.filter(
+        (item) => item.productId !== id
+      );
+      console.log("filteredItems", filteredItems);
+      const updatedShoppingCartItems = [...filteredItems, newItem];
+      console.log("updatedShoppingCartItems", updatedShoppingCartItems);
+      const upatedUser = {
+        ...user,
+        shoppingCartItems: updatedShoppingCartItems,
+      };
+      console.log("upatedUser", upatedUser);
+      const filteredUsers = users.filter((user) => user.name !== userName);
+      console.log("filteredUsers", filteredUsers);
+      const upatedUsers = [...filteredUsers, upatedUser];
+      console.log("upatedUsers", upatedUsers);
+      setUsers(upatedUsers);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -74,17 +105,25 @@ function App() {
         <Route
           path="/"
           element={
-            <Homepage userName={userName} handleFavorite={handleFavorite} />
+            <Homepage
+              userName={userName}
+              handleFavorite={handleFavorite}
+              handleShopping={handleShopping}
+            />
           }
         />
         <Route
           path="/shopping-cart"
-          element={<ShoppingCart shoppingCartItems={user?.shoppingCartItems} />}
+          element={<ShoppingCart userName={userName} />}
         />
         <Route
           path="/favorite"
           element={
-            <Favorite userName={userName} handleFavorite={handleFavorite} />
+            <Favorite
+              userName={userName}
+              handleFavorite={handleFavorite}
+              handleShopping={handleShopping}
+            />
           }
         />
         <Route
@@ -102,7 +141,11 @@ function App() {
         <Route
           path="/:id"
           element={
-            <Details userName={userName} handleFavorite={handleFavorite} />
+            <Details
+              userName={userName}
+              handleFavorite={handleFavorite}
+              handleShopping={handleShopping}
+            />
           }
         />
       </Routes>
