@@ -4,7 +4,7 @@ import OrderList from "../components/OrderList";
 import { User } from "../components/global.type";
 
 type UserAccountProps = {
-  user: User | null;
+  user: User | undefined;
   isLoggedIn: boolean;
   userPageMessage: string;
   onLogin: (newUserData: { [k: string]: FormDataEntryValue }) => void;

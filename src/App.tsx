@@ -17,7 +17,7 @@ type newUserData = {
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userPageMessage, setUserPageMessage] = useState("");
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | undefined>(undefined);
   const [userName, setUserName] = useState<string | null>("");
   const [users, setUsers] = useLocalStorage("users", [] as User[]);
 
@@ -27,7 +27,6 @@ function App() {
         user.name == newUserData.userName &&
         user.password == newUserData.password
     );
-
     if (user) {
       setUser(user);
       setUserName(user.name);
@@ -64,7 +63,6 @@ function App() {
           return updatedUser;
         } else return user;
       });
-
       setUsers(updatedUsers);
     }
   };
@@ -101,7 +99,12 @@ function App() {
             />
           }
         />
-        <Route path="/:id" element={<Details user={user} />} />
+        <Route
+          path="/:id"
+          element={
+            <Details userName={userName} handleFavorite={handleFavorite} />
+          }
+        />
       </Routes>
     </>
   );

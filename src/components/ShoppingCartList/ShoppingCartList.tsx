@@ -1,5 +1,5 @@
-import { ShoppingCartItem } from "../global.type";
 import ShoppingCartItemCard from "./ShoppingCartItemCard";
+import { ShoppingCartItem } from "../global.type";
 
 type ShoppingCartListProps = {
   shoppingCartItems: ShoppingCartItem[] | undefined;
