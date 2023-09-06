@@ -11,9 +11,14 @@ type FavoriteProps = {
     isFavorite: boolean,
     user: User | undefined
   ) => void;
+  handleShopping: (id: string, product: Product) => void;
 };
 
-const Favorite: React.FC<FavoriteProps> = ({ userName, handleFavorite }) => {
+const Favorite: React.FC<FavoriteProps> = ({
+  userName,
+  handleFavorite,
+  handleShopping,
+}) => {
   const users = useReadLocalStorage<User[] | null>("users");
   const [favoriteProducts, setFavoriteProducts] = useState<
     Product[] | undefined
@@ -28,12 +33,21 @@ const Favorite: React.FC<FavoriteProps> = ({ userName, handleFavorite }) => {
     setFavoriteProducts(filteredProducts);
   }, [users, userName]);
 
+  if (favoriteProducts?.length === 0) {
+    return (
+      <p>
+        Sie haben noch keine gespeicherte Waren oder sich noch nicht angemeldet.
+      </p>
+    );
+  }
+
   return (
     <>
       <ProductCardList
         products={favoriteProducts}
         userName={userName}
         handleFavorite={handleFavorite}
+        handleShopping={handleShopping}
       />
     </>
   );
