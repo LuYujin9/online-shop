@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {
   FiChevronLeft,
   FiHome,
@@ -6,7 +7,6 @@ import {
   FiStar,
   FiUser,
 } from "react-icons/fi";
-import { NavLink } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();

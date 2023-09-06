@@ -4,9 +4,9 @@ import OrderList from "../components/OrderList";
 import { User } from "../components/global.type";
 
 type UserAccountProps = {
-  user: User | null;
+  user: User | undefined;
   isLoggedIn: boolean;
-  isShowMessage: boolean;
+  userPageMessage: string;
   onLogin: (newUserData: { [k: string]: FormDataEntryValue }) => void;
   onLogout: () => void;
 };
@@ -16,13 +16,12 @@ type users = User[];
 const UserAccount: React.FC<UserAccountProps> = ({
   user,
   isLoggedIn,
-  isShowMessage,
+  userPageMessage,
   onLogin,
   onLogout,
 }) => {
   const [users, setUsers] = useLocalStorage("users", [] as users);
   const [registerName, setRegisterName] = useState("");
-  //const [registerPassword, setRegisterPassword] = useState("");
   const registerPasswordRef = useRef<HTMLInputElement | null>(null);
   const [RegisterMessage, setRegisterMessage] = useState("");
   const [isShowRegisterForm, setIsShowRegisterForm] = useState(false);
@@ -39,10 +38,10 @@ const UserAccount: React.FC<UserAccountProps> = ({
     onLogin(newUserData);
   };
 
-  const handleShowRegisterForm: React.MouseEventHandler<
+  const toggleShowRegisterForm: React.MouseEventHandler<
     HTMLButtonElement
   > = () => {
-    setIsShowRegisterForm(true);
+    setIsShowRegisterForm(!isShowRegisterForm);
   };
 
   const handleName: React.ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -55,10 +54,6 @@ const UserAccount: React.FC<UserAccountProps> = ({
       setRegisterMessage("Der Benutzername kann nicht gewählt werden.");
       setRegisterName(newName);
     }
-  };
-
-  const handlePassword: React.ChangeEventHandler<HTMLInputElement> = () => {
-    //setRegisterPassword(event.target.value);
   };
 
   const handleRegister: React.MouseEventHandler<HTMLButtonElement> = (
@@ -93,53 +88,66 @@ const UserAccount: React.FC<UserAccountProps> = ({
   return (
     <>
       {isLoggedIn ? (
-        <div>
+        <main>
           <p>{user?.name}</p>
           <button onClick={onLogout}>Abmelden</button>
           <OrderList orders={user?.orders} />
-        </div>
+        </main>
       ) : (
-        <form onSubmit={(event) => handleLogin(event)}>
-          <label htmlFor="user-name">Benutzername:</label>
-          <input type="text" name="userName" id="user-name" required />
-          <label htmlFor="password">Passwort:</label>
-          <input type="password" name="password" id="password" required />
-          <button type="submit">Anmelden</button>
-        </form>
-      )}
-      <p>Haben Sie noch kein Konto? Registrieren Sie sich.</p>
-      <button onClick={handleShowRegisterForm}>Registrieren</button>
-      {isShowRegisterForm && (
-        <form>
-          <label htmlFor="new-user-name">Benutzername:</label>
-          <input
-            type="text"
-            name="userName"
-            id="new-user-name"
-            onChange={handleName}
-            required
-          />
-          <p>{RegisterMessage}</p>
-          <label htmlFor="new-password">Passwort:</label>
-          <input
-            type="password"
-            name="password"
-            id="new-password"
-            ref={registerPasswordRef}
-            onChange={handlePassword}
-            required
-          />
-          <button type="submit" onClick={(event) => handleRegister(event)}>
-            Registrieren
-          </button>
-        </form>
-      )}
-
-      {isShowMessage && (
-        <p>
-          Benutzername oder Passwort sind falsch, bitte probieren Sie es noch
-          einmal.
-        </p>
+        <main>
+          {isShowRegisterForm ? (
+            <section>
+              <button onClick={toggleShowRegisterForm}>Zur Anmeldung</button>
+              <form>
+                <label htmlFor="new-user-name">Benutzername:</label>
+                <input
+                  type="text"
+                  name="userName"
+                  id="new-user-name"
+                  onChange={handleName}
+                  required
+                />
+                <p>{RegisterMessage}</p>
+                <label htmlFor="new-password">Passwort:</label>
+                <input
+                  type="password"
+                  name="password"
+                  id="new-password"
+                  ref={registerPasswordRef}
+                  required
+                />
+                <button
+                  type="submit"
+                  onClick={(event) => handleRegister(event)}
+                >
+                  Registrieren
+                </button>
+              </form>
+            </section>
+          ) : (
+            <div>
+              <section>
+                <form onSubmit={(event) => handleLogin(event)}>
+                  <label htmlFor="user-name">Benutzername:</label>
+                  <input type="text" name="userName" id="user-name" required />
+                  <label htmlFor="password">Passwort:</label>
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    required
+                  />
+                  <button type="submit">Anmelden</button>
+                </form>
+                <p>{userPageMessage}</p>
+              </section>
+              <section>
+                <p>Haben Sie noch kein Konto? Registrieren Sie sich.</p>
+                <button onClick={toggleShowRegisterForm}>Registrieren</button>
+              </section>
+            </div>
+          )}
+        </main>
       )}
     </>
   );
