@@ -1,3 +1,5 @@
+import { useState, useRef } from "react";
+import { useLocalStorage } from "usehooks-ts";
 import OrderList from "../components/OrderList";
 import { User } from "../components/global.type";
 
@@ -9,6 +11,8 @@ type UserAccountProps = {
   onLogout: () => void;
 };
 
+type users = User[];
+
 const UserAccount: React.FC<UserAccountProps> = ({
   user,
   isLoggedIn,
@@ -16,11 +20,74 @@ const UserAccount: React.FC<UserAccountProps> = ({
   onLogin,
   onLogout,
 }) => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [users, setUsers] = useLocalStorage("users", [] as users);
+  const [registerName, setRegisterName] = useState("");
+  //const [registerPassword, setRegisterPassword] = useState("");
+  const registerPasswordRef = useRef<HTMLInputElement | null>(null);
+  const [RegisterMessage, setRegisterMessage] = useState("");
+  const [isShowRegisterForm, setIsShowRegisterForm] = useState(false);
+
+  const names: string[] = [];
+  if (users) {
+    users.forEach((user) => names.push(user.name));
+  }
+
+  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
     const newUserData = Object.fromEntries(formData);
     onLogin(newUserData);
+  };
+
+  const handleShowRegisterForm: React.MouseEventHandler<
+    HTMLButtonElement
+  > = () => {
+    setIsShowRegisterForm(true);
+  };
+
+  const handleName: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const newName: string = event.target.value;
+    if (names.includes(newName)) {
+      setRegisterMessage(
+        "Es gibt diesen Benutzernamen bereits. Bitte wählen Sie einen anderen."
+      );
+    } else {
+      setRegisterMessage("Der Benutzername kann nicht gewählt werden.");
+      setRegisterName(newName);
+    }
+  };
+
+  const handlePassword: React.ChangeEventHandler<HTMLInputElement> = () => {
+    //setRegisterPassword(event.target.value);
+  };
+
+  const handleRegister: React.MouseEventHandler<HTMLButtonElement> = (
+    event
+  ) => {
+    event.preventDefault();
+    if (
+      !registerPasswordRef.current ||
+      !registerPasswordRef.current.value ||
+      registerName === ""
+    ) {
+      setRegisterMessage(
+        "Regestrierung war nicht erfolgreich. Bitte geben Sie einen gültigen Benutzername und Passwort ein."
+      );
+    } else {
+      const registerPassword: string = registerPasswordRef.current.value;
+      const newUser: User = {
+        name: registerName,
+        password: registerPassword,
+        orders: [],
+        favorites: [],
+        shoppingCartItems: [],
+      };
+      users.push(newUser);
+      setUsers(users);
+      setRegisterMessage("Regestierung war erfolgreich.");
+      setRegisterName("");
+      setIsShowRegisterForm(false);
+    }
   };
 
   return (
@@ -32,17 +99,46 @@ const UserAccount: React.FC<UserAccountProps> = ({
           <OrderList orders={user?.orders} />
         </div>
       ) : (
-        <form onSubmit={(event) => handleSubmit(event)}>
-          <label htmlFor="user-name">Username:</label>
+        <form onSubmit={(event) => handleLogin(event)}>
+          <label htmlFor="user-name">Benutzername:</label>
           <input type="text" name="userName" id="user-name" required />
-          <label htmlFor="password">Password:</label>
+          <label htmlFor="password">Passwort:</label>
           <input type="password" name="password" id="password" required />
           <button type="submit">Anmelden</button>
         </form>
       )}
+      <p>Haben Sie noch kein Konto? Registrieren Sie sich.</p>
+      <button onClick={handleShowRegisterForm}>Registrieren</button>
+      {isShowRegisterForm && (
+        <form>
+          <label htmlFor="new-user-name">Benutzername:</label>
+          <input
+            type="text"
+            name="userName"
+            id="new-user-name"
+            onChange={handleName}
+            required
+          />
+          <p>{RegisterMessage}</p>
+          <label htmlFor="new-password">Passwort:</label>
+          <input
+            type="password"
+            name="password"
+            id="new-password"
+            ref={registerPasswordRef}
+            onChange={handlePassword}
+            required
+          />
+          <button type="submit" onClick={(event) => handleRegister(event)}>
+            Registrieren
+          </button>
+        </form>
+      )}
+
       {isShowMessage && (
         <p>
-          Username and Password passen nicht, bitte probieren Sie noch einmal.
+          Benutzername oder Passwort sind falsch, bitte probieren Sie es noch
+          einmal.
         </p>
       )}
     </>
