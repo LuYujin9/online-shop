@@ -1,26 +1,29 @@
 import "./App.css";
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
+import { useReadLocalStorage } from "usehooks-ts";
 import Header from "./components/Header";
 import Homepage from "./pages/Homepage";
 import ShoppingCart from "./pages/ShoppingCart";
 import Favorite from "./pages/Favorite";
 import UserAccount from "./pages/UserAccount";
 import Details from "./pages/[id]";
-import { users } from "../public/data";
 import { User } from "./components/global.type";
 
 type newUserData = {
   [k: string]: FormDataEntryValue;
 };
 
+type users = User[];
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isShowMessage, setIsShowMessage] = useState(false);
+  const [userPageMessage, setUserPageMessage] = useState("");
   const [user, setUser] = useState<User | null>(null);
+  const users: users | null = useReadLocalStorage("users");
 
   const hangdleLogin = (newUserData: newUserData) => {
-    const user = users.find(
+    const user = users?.find(
       (user) =>
         user.name == newUserData.userName &&
         user.password == newUserData.password
@@ -29,16 +32,18 @@ function App() {
     if (user) {
       setUser(user);
       setIsLoggedIn(true);
-      setIsShowMessage(false);
+      setUserPageMessage("");
     } else {
-      setIsShowMessage(true);
+      setUserPageMessage(
+        "Benutzername oder Passwort sind falsch, bitte probieren Sie es noch einmal."
+      );
     }
   };
 
   const hangdleLogout = () => {
     setUser(null);
     setIsLoggedIn(false);
-    setIsShowMessage(false);
+    setUserPageMessage("");
   };
 
   return (
@@ -57,7 +62,7 @@ function App() {
             <UserAccount
               user={user}
               isLoggedIn={isLoggedIn}
-              isShowMessage={isShowMessage}
+              userPageMessage={userPageMessage}
               onLogin={hangdleLogin}
               onLogout={hangdleLogout}
             />
