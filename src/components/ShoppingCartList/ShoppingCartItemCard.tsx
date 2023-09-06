@@ -3,10 +3,12 @@ import { ShoppingCartItem } from "../global.type";
 
 type ShoppingCartItemCardProps = {
   shoppingCartItem: ShoppingCartItem | undefined;
+  handleShoppingCartItemDelete: (id: string) => void;
 };
 
 const ShoppingCartItemCard = ({
   shoppingCartItem,
+  handleShoppingCartItemDelete,
 }: ShoppingCartItemCardProps) => {
   const [quantity, setQuantity] = useState(shoppingCartItem?.quantity);
 
@@ -29,6 +31,14 @@ const ShoppingCartItemCard = ({
       <button onClick={handleMinus}>-</button>
       <p>{quantity}</p>
       <button onClick={handlePlus}>+</button>
+      <button
+        onClick={() => {
+          if (shoppingCartItem)
+            handleShoppingCartItemDelete(shoppingCartItem.productId);
+        }}
+      >
+        Entfern
+      </button>
     </section>
   );
 };
