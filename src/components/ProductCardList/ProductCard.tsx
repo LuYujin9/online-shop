@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocalStorage } from "usehooks-ts";
+import { useReadLocalStorage } from "usehooks-ts";
 import { NavLink } from "react-router-dom";
 import FavoriteButton from "../BookmarkButton";
 import { Product, User } from "../global.type";
@@ -7,12 +7,21 @@ import { Product, User } from "../global.type";
 type ProductCardProps = {
   product: Product;
   userName: string | null;
+  handleFavorite: (
+    id: string,
+    isFavorite: boolean,
+    user: User | undefined
+  ) => void;
 };
 
-const ProductCard = ({ product, userName }: ProductCardProps) => {
+const ProductCard = ({
+  product,
+  userName,
+  handleFavorite,
+}: ProductCardProps) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [user, setUser] = useState<User | undefined>(undefined);
-  const [users, setUsers] = useLocalStorage("users", [] as User[]);
+  const users: User[] | null = useReadLocalStorage("users");
 
   useEffect(() => {
     const user = users?.find((user) => user.name == userName);
@@ -25,25 +34,7 @@ const ProductCard = ({ product, userName }: ProductCardProps) => {
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
-
-    if (user) {
-      let newFavorites: string[] = [];
-      if (isFavorite === false) {
-        newFavorites = [...user.favorites, product.id];
-      } else {
-        newFavorites = user.favorites.filter(
-          (favorite) => favorite !== product.id
-        );
-      }
-      const updatedUser = { ...user, favorites: newFavorites };
-      const updatedUsers = users.map((user) => {
-        if (user.name === updatedUser.name) {
-          return updatedUser;
-        } else return user;
-      });
-
-      setUsers(updatedUsers);
-    }
+    handleFavorite(product.id, isFavorite, user);
   };
 
   return (

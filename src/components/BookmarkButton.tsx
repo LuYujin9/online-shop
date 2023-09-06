@@ -12,7 +12,7 @@ const BookmarkButton = ({
   return (
     <button
       type="button"
-      onClick={() => toggleFavorite()}
+      onClick={toggleFavorite}
       className={isFavorite ? "aktive-favorite-button" : "favorite-button"}
     >
       <FiStar />

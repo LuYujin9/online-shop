@@ -1,7 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import { useReadLocalStorage } from "usehooks-ts";
+import { useLocalStorage } from "usehooks-ts";
 import Header from "./components/Header";
 import Homepage from "./pages/Homepage";
 import ShoppingCart from "./pages/ShoppingCart";
@@ -14,14 +14,12 @@ type newUserData = {
   [k: string]: FormDataEntryValue;
 };
 
-type users = User[];
-
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userPageMessage, setUserPageMessage] = useState("");
   const [user, setUser] = useState<User | null>(null);
   const [userName, setUserName] = useState<string | null>("");
-  const users: users | null = useReadLocalStorage("users");
+  const [users, setUsers] = useLocalStorage("users", [] as User[]);
 
   const hangdleLogin = (newUserData: newUserData) => {
     const user = users?.find(
@@ -48,16 +46,49 @@ function App() {
     setUserPageMessage("");
   };
 
+  const handleFavorite = (
+    id: string,
+    isFavorite: boolean,
+    user: User | undefined
+  ) => {
+    if (user) {
+      let newFavorites: string[] = [];
+      if (isFavorite === false) {
+        newFavorites = [...user.favorites, id];
+      } else {
+        newFavorites = user.favorites.filter((favorite) => favorite !== id);
+      }
+      const updatedUser = { ...user, favorites: newFavorites };
+      const updatedUsers = users.map((user) => {
+        if (user.name === updatedUser.name) {
+          return updatedUser;
+        } else return user;
+      });
+
+      setUsers(updatedUsers);
+    }
+  };
+
   return (
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<Homepage userName={userName} />} />
+        <Route
+          path="/"
+          element={
+            <Homepage userName={userName} handleFavorite={handleFavorite} />
+          }
+        />
         <Route
           path="/shopping-cart"
           element={<ShoppingCart shoppingCartItems={user?.shoppingCartItems} />}
         />
-        <Route path="/favorite" element={<Favorite user={user} />} />
+        <Route
+          path="/favorite"
+          element={
+            <Favorite userName={userName} handleFavorite={handleFavorite} />
+          }
+        />
         <Route
           path="/user-account"
           element={
