@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useReadLocalStorage } from "usehooks-ts";
 import { NavLink } from "react-router-dom";
-import FavoriteButton from "../BookmarkButton";
+import BookmarkButton from "../BookmarkButton";
 import { Product, User } from "../global.type";
 import AddToCartButton from "../AddToCartButton";
 
@@ -31,7 +31,6 @@ const ProductCard = ({
     setUser(user);
     if (user?.favorites.includes(product.id)) {
       setIsFavorite(true);
-      console.log("useEffect");
     }
   }, [product.id, userName, users]);
 
@@ -46,7 +45,7 @@ const ProductCard = ({
 
   return (
     <>
-      <FavoriteButton isFavorite={isFavorite} toggleFavorite={toggleFavorite} />
+      <BookmarkButton isFavorite={isFavorite} toggleFavorite={toggleFavorite} />
       <AddToCartButton handleAddToCart={handleAddToCart} />
       <NavLink to={`/${product.id}`}>
         <section className="product-card">
