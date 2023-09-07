@@ -39,6 +39,10 @@ nav {
   background-color: red;
 }
 
+.description-photo {
+  width: 15em;
+}
+
 /* style of userAccount */
 .order-list {
   margin: 1em;

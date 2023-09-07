@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import ShoppingCartItemCard from "./ShoppingCartItemCard";
-import { ShoppingCartItem, User } from "../global.type";
+import { ShoppingCartItem, User, Product } from "../global.type";
 
 type ShoppingCartListProps = {
   shoppingCartItems: ShoppingCartItem[] | undefined;
   userName: string | null;
+  inCartProducts: Product[] | null;
 };
 
 const ShoppingCartList = ({
@@ -14,7 +15,6 @@ const ShoppingCartList = ({
 }: ShoppingCartListProps) => {
   const [users, setUsers] = useLocalStorage("users", [] as User[]);
   const [user, setUser] = useState<User | undefined>(undefined);
-  console.log(shoppingCartItems);
 
   useEffect(() => {
     const user = users?.find((user) => user.name == userName);
@@ -28,13 +28,11 @@ const ShoppingCartList = ({
       );
       if (filteredItems) {
         const updatedUser = { ...user, shoppingCartItems: filteredItems };
-        console.log("updatedUser", updatedUser);
         const updatedUsers = users.map((user) => {
           if (user.name === userName) {
             return updatedUser;
           } else return user;
         });
-        console.log("updatedUsers", updatedUsers);
         setUsers(updatedUsers);
       }
     }

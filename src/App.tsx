@@ -69,9 +69,7 @@ function App() {
 
   const handleShopping = (id: string, product: Product) => {
     const user = users?.find((user) => user.name == userName);
-    console.log("id", id);
     if (user) {
-      console.log("user", user.shoppingCartItems);
       const newItem = {
         productId: id,
         productName: product.name,
@@ -82,18 +80,13 @@ function App() {
       const filteredItems = user.shoppingCartItems.filter(
         (item) => item.productId !== id
       );
-      console.log("filteredItems", filteredItems);
       const updatedShoppingCartItems = [...filteredItems, newItem];
-      console.log("updatedShoppingCartItems", updatedShoppingCartItems);
       const upatedUser = {
         ...user,
         shoppingCartItems: updatedShoppingCartItems,
       };
-      console.log("upatedUser", upatedUser);
       const filteredUsers = users.filter((user) => user.name !== userName);
-      console.log("filteredUsers", filteredUsers);
       const upatedUsers = [...filteredUsers, upatedUser];
-      console.log("upatedUsers", upatedUsers);
       setUsers(upatedUsers);
     }
   };

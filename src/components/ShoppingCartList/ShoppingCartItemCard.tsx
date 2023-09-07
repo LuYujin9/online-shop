@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { ShoppingCartItem } from "../global.type";
+import { useState, useEffect } from "react";
+import { Product, ShoppingCartItem } from "../global.type";
+import { products } from "../../../public/data";
 
 type ShoppingCartItemCardProps = {
   shoppingCartItem: ShoppingCartItem | undefined;
@@ -11,6 +12,14 @@ const ShoppingCartItemCard = ({
   handleShoppingCartItemDelete,
 }: ShoppingCartItemCardProps) => {
   const [quantity, setQuantity] = useState(shoppingCartItem?.quantity);
+  const [inCartProduct, setInCartProduct] = useState<Product>();
+
+  useEffect(() => {
+    const inCartProduct = products.find(
+      (product) => product.id === shoppingCartItem?.productId
+    );
+    setInCartProduct(inCartProduct);
+  }, [shoppingCartItem]);
 
   const handleMinus = () => {
     if (quantity && quantity > 1) setQuantity(quantity - 1);
@@ -28,6 +37,7 @@ const ShoppingCartItemCard = ({
         alt="photo of product"
         className="product-photo"
       />
+      <p>Preic: {inCartProduct?.price}</p>
       <button onClick={handleMinus}>-</button>
       <p>{quantity}</p>
       <button onClick={handlePlus}>+</button>
