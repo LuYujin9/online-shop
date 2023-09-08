@@ -4,7 +4,6 @@ import OrderList from "../components/OrderList";
 import { User } from "../components/global.type";
 
 type UserAccountProps = {
-  user: User | undefined;
   isLoggedIn: boolean;
   userPageMessage: string;
   onLogin: (newUserData: { [k: string]: FormDataEntryValue }) => void;
@@ -14,7 +13,6 @@ type UserAccountProps = {
 type users = User[];
 
 const UserAccount: React.FC<UserAccountProps> = ({
-  user,
   isLoggedIn,
   userPageMessage,
   onLogin,
@@ -22,6 +20,7 @@ const UserAccount: React.FC<UserAccountProps> = ({
 }) => {
   const [users, setUsers] = useLocalStorage("users", [] as users);
   const [registerName, setRegisterName] = useState("");
+  const [user, setUser] = useState<User | undefined>(undefined);
   const registerPasswordRef = useRef<HTMLInputElement | null>(null);
   const [RegisterMessage, setRegisterMessage] = useState("");
   const [isShowRegisterForm, setIsShowRegisterForm] = useState(false);
@@ -35,6 +34,12 @@ const UserAccount: React.FC<UserAccountProps> = ({
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
     const newUserData = Object.fromEntries(formData);
+    const user = users?.find(
+      (user) =>
+        user.name == newUserData.userName &&
+        user.password == newUserData.password
+    );
+    setUser(user);
     onLogin(newUserData);
   };
 

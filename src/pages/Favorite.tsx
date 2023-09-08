@@ -6,12 +6,8 @@ import { User, Product } from "../components/global.type";
 
 type FavoriteProps = {
   userName: string | null;
-  handleFavorite: (
-    id: string,
-    isFavorite: boolean,
-    user: User | undefined
-  ) => void;
-  handleShopping: (id: string, product: Product) => void;
+  handleFavorite: (id: string, isFavorite: boolean) => void;
+  handleShopping: (product: Product) => void;
 };
 
 const Favorite: React.FC<FavoriteProps> = ({
@@ -23,9 +19,11 @@ const Favorite: React.FC<FavoriteProps> = ({
   const [favoriteProducts, setFavoriteProducts] = useState<
     Product[] | undefined
   >(undefined);
+  const [user, setUser] = useState<User | undefined>(undefined);
 
   useEffect(() => {
     const user = users?.find((user) => user.name == userName);
+    setUser(user);
     const favorites = user?.favorites;
     const filteredProducts = products.filter((product) =>
       favorites?.find((favorite) => favorite === product.id)
@@ -45,7 +43,7 @@ const Favorite: React.FC<FavoriteProps> = ({
     <>
       <ProductCardList
         products={favoriteProducts}
-        userName={userName}
+        user={user}
         handleFavorite={handleFavorite}
         handleShopping={handleShopping}
       />

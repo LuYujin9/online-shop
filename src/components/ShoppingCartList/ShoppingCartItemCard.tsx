@@ -1,56 +1,52 @@
-import { useState, useEffect } from "react";
-import { Product, ShoppingCartItem } from "../global.type";
-import { products } from "../../../public/data";
+import { Product, User } from "../global.type";
 
 type ShoppingCartItemCardProps = {
-  shoppingCartItem: ShoppingCartItem | undefined;
+  user: User;
+  product: Product;
   handleShoppingCartItemDelete: (id: string) => void;
+  handleMinus: (quantity: number) => void;
+  handlePlus: (quantity: number) => void;
 };
 
 const ShoppingCartItemCard = ({
-  shoppingCartItem,
+  user,
+  product,
   handleShoppingCartItemDelete,
+  handleMinus,
+  handlePlus,
 }: ShoppingCartItemCardProps) => {
-  const [quantity, setQuantity] = useState(shoppingCartItem?.quantity);
-  const [inCartProduct, setInCartProduct] = useState<Product>();
+  const quantity = user.shoppingCartItems.find(
+    (item) => item.productId === product.id
+  )?.quantity;
 
-  useEffect(() => {
-    const inCartProduct = products.find(
-      (product) => product.id === shoppingCartItem?.productId
+  if (quantity) {
+    return (
+      <section>
+        <h4>{product.name}</h4>
+        <img
+          src={product.photos[0]}
+          alt="photo of product"
+          className="product-photo"
+        />
+        <p>Preis: {product.price}€</p>
+        <button onClick={() => handleMinus(quantity)}>-</button>
+        <p>{quantity}</p>
+        <button onClick={() => handlePlus(quantity)}>+</button>
+        <p>gesamt:{product.price * quantity}€</p>
+        <button
+          onClick={() => {
+            handleShoppingCartItemDelete(product.id);
+          }}
+        >
+          Entfern
+        </button>
+      </section>
     );
-    setInCartProduct(inCartProduct);
-  }, [shoppingCartItem]);
-
-  const handleMinus = () => {
-    if (quantity && quantity > 1) setQuantity(quantity - 1);
-  };
-
-  const handlePlus = () => {
-    if (quantity) setQuantity(quantity + 1);
-  };
-
-  return (
-    <section>
-      <h4>{shoppingCartItem?.productName}</h4>
-      <img
-        src={shoppingCartItem?.photo}
-        alt="photo of product"
-        className="product-photo"
-      />
-      <p>Preic: {inCartProduct?.price}</p>
-      <button onClick={handleMinus}>-</button>
-      <p>{quantity}</p>
-      <button onClick={handlePlus}>+</button>
-      <button
-        onClick={() => {
-          if (shoppingCartItem)
-            handleShoppingCartItemDelete(shoppingCartItem.productId);
-        }}
-      >
-        Entfern
-      </button>
-    </section>
-  );
+  } else {
+    return (
+      <p>Ooops! Etwas ist kaputt. Bitte kontaktieren Sie die Entwicklerin.</p>
+    );
+  }
 };
 
 export default ShoppingCartItemCard;

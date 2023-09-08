@@ -3,18 +3,14 @@ import { Product, User } from "../global.type";
 
 type ProductCardListProps = {
   products: Product[] | undefined;
-  userName: string | null;
-  handleFavorite: (
-    id: string,
-    isFavorite: boolean,
-    user: User | undefined
-  ) => void;
-  handleShopping: (id: string, product: Product) => void;
+  user: User | undefined;
+  handleFavorite: (id: string, isFavorite: boolean) => void;
+  handleShopping: (product: Product) => void;
 };
 
 const ProductCardList = ({
   products,
-  userName,
+  user,
   handleFavorite,
   handleShopping,
 }: ProductCardListProps) => {
@@ -24,7 +20,7 @@ const ProductCardList = ({
         <ProductCard
           key={product.id}
           product={product}
-          userName={userName}
+          user={user}
           handleFavorite={handleFavorite}
           handleShopping={handleShopping}
         />

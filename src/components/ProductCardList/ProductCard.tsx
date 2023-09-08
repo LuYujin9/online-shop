@@ -7,32 +7,29 @@ import AddToCartButton from "../AddToCartButton";
 
 type ProductCardProps = {
   product: Product;
-  userName: string | null;
+  user: User | undefined;
   handleFavorite: (
     id: string,
     isFavorite: boolean,
     user: User | undefined
   ) => void;
-  handleShopping: (id: string, product: Product) => void;
+  handleShopping: (product: Product) => void;
 };
 
 const ProductCard = ({
   product,
-  userName,
+  user,
   handleFavorite,
   handleShopping,
 }: ProductCardProps) => {
   const [isFavorite, setIsFavorite] = useState(false);
-  const [user, setUser] = useState<User | undefined>(undefined);
   const users: User[] | null = useReadLocalStorage("users");
 
   useEffect(() => {
-    const user = users?.find((user) => user.name == userName);
-    setUser(user);
     if (user?.favorites.includes(product.id)) {
       setIsFavorite(true);
     }
-  }, [product.id, userName, users]);
+  }, [product.id, user, users]);
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
@@ -40,7 +37,7 @@ const ProductCard = ({
   };
 
   const handleAddToCart = () => {
-    if (user) handleShopping(product.id, product);
+    if (user) handleShopping(product);
   };
 
   return (
