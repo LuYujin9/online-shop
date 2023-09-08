@@ -5,8 +5,8 @@ type ShoppingCartListProps = {
   user: User;
   handleShoppingCartItemDelete: (id: string) => void;
   inCartProducts: Product[] | null;
-  handleMinus: (quantity: number) => void;
-  handlePlus: (quantity: number) => void;
+  handleMinus: (quantity: number, id: string) => void;
+  handlePlus: (id: string) => void;
 };
 
 const ShoppingCartList = ({

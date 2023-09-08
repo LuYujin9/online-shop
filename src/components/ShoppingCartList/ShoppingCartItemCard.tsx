@@ -4,8 +4,8 @@ type ShoppingCartItemCardProps = {
   user: User;
   product: Product;
   handleShoppingCartItemDelete: (id: string) => void;
-  handleMinus: (quantity: number) => void;
-  handlePlus: (quantity: number) => void;
+  handleMinus: (quantity: number, id: string) => void;
+  handlePlus: (id: string) => void;
 };
 
 const ShoppingCartItemCard = ({
@@ -29,10 +29,10 @@ const ShoppingCartItemCard = ({
           className="product-photo"
         />
         <p>Preis: {product.price}€</p>
-        <button onClick={() => handleMinus(quantity)}>-</button>
+        <button onClick={() => handleMinus(quantity, product.id)}>-</button>
         <p>{quantity}</p>
-        <button onClick={() => handlePlus(quantity)}>+</button>
-        <p>gesamt:{product.price * quantity}€</p>
+        <button onClick={() => handlePlus(product.id)}>+</button>
+        <p>gesamt:{(product.price * quantity).toFixed(2)}€</p>
         <button
           onClick={() => {
             handleShoppingCartItemDelete(product.id);
