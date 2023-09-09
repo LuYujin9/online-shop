@@ -52,6 +52,7 @@ const StyledHeader = styled.header`
   flex-direction: row;
   position: fixed;
   top: 0;
+  z-index: 5;
 `;
 
 const StyledNav = styled.nav`
