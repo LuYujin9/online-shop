@@ -19,19 +19,21 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ userName }) => {
     "Sie haben noch keine gespeicherte Waren oder sich noch nicht angemeldet."
   );
 
-  const itemsId = user?.shoppingCartItems.map((item) => item.productId);
-  const inCartProducts = products.filter((product) =>
-    itemsId?.includes(product.id)
-  );
-
   useEffect(() => {
-    setUsers(updatedUsers);
+    if (updatedUsers !== null) {
+      setUsers(updatedUsers);
+    }
   }, [updatedUsers, setUsers]);
 
   useEffect(() => {
     const user = users?.find((user) => user.name === userName);
     setUser(user ? user : null);
   }, [users, userName, setUser]);
+
+  const itemsId = user?.shoppingCartItems.map((item) => item.productId);
+  const inCartProducts = products.filter((product) =>
+    itemsId?.includes(product.id)
+  );
 
   const eachItemTotalPrices: number[] = [0];
   if (user) {
