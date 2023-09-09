@@ -9,14 +9,18 @@ export type Product = {
 };
 
 export type Order = {
-  id: string;
-  productName: string;
+  orderNumber: string;
+  orderedProducts: {
+    productId: string;
+    productName: string;
+    photo: string;
+    quantity: number;
+  }[];
   date: string;
-  quantity: number;
   adress: string;
 };
 
-export type ShoppingCartItem = {
+export type itemInfo = {
   productId: string;
   productName: string;
   photo: string;
@@ -27,10 +31,14 @@ export type User = {
   name: string;
   password: string;
   orders: {
-    id: string;
-    productName: string;
+    orderNumber: string;
+    orderedProducts: {
+      productId: string;
+      productName: string;
+      photo: string;
+      quantity: number;
+    }[];
     date: string;
-    quantity: number;
     adress: string;
   }[];
   favorites: string[];

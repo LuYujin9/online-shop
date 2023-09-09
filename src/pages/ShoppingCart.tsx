@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { useImmer } from "use-immer";
+import uuid from "react-uuid";
 import ShoppingCartList from "../components/ShoppingCartList/ShoppingCartList";
 import { User } from "../components/global.type";
 import { products } from "../../public/data";
@@ -13,6 +14,10 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ userName }) => {
   const [users, setUsers] = useLocalStorage<User[] | null>("users", null);
   const [updatedUsers, setUpdatedUsers] = useImmer<User[] | null>(users);
   const [user, setUser] = useState<User | null>(null);
+  const [isShowKasse, setIsShowKasse] = useState(false);
+  const [cartMessage, setCartMessage] = useState(
+    "Sie haben noch keine gespeicherte Waren oder sich noch nicht angemeldet."
+  );
 
   const itemsId = user?.shoppingCartItems.map((item) => item.productId);
   const inCartProducts = products.filter((product) =>
@@ -85,26 +90,95 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ userName }) => {
     });
   };
 
-  if (user) {
-    return (
-      <>
-        <h3>Shopping Cart</h3>
-        <ShoppingCartList
-          handleShoppingCartItemDelete={handleShoppingCartItemDelete}
-          user={user}
-          inCartProducts={inCartProducts}
-          handleMinus={handleMinus}
-          handlePlus={handlePlus}
-        />
-        <p>Die Gesamtpreis ist :{totalPrice}</p>
-        <button type="button">ZUR KASSE</button>
-      </>
+  const handleSubmitOrder: React.FormEventHandler<HTMLFormElement> = (
+    event
+  ) => {
+    event.preventDefault();
+    const formData = new FormData(event.target as HTMLFormElement);
+    const newOrderData = Object.fromEntries(formData);
+    setUpdatedUsers((draft) => {
+      const user = draft?.find((user) => user.name === userName);
+      if (user) {
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+        const day = String(currentDate.getDate()).padStart(2, "0");
+        const formattedDate = `${day}-${month}-${year}`;
+        const newOrder = {
+          orderNumber: uuid(),
+          orderedProducts: user.shoppingCartItems,
+          date: formattedDate,
+          adress: newOrderData.address.toString(),
+        };
+        user.shoppingCartItems = [];
+        user.orders = [...user.orders, newOrder];
+      }
+    });
+    setUsers(updatedUsers);
+    setCartMessage(
+      "Erfoglreich bestellt. Bitte siehen Sie die Bestellung in Ihrem Konto."
     );
+  };
+
+  if (!user || user.shoppingCartItems.length === 0) {
+    return <p>{cartMessage}</p>;
   } else {
     return (
-      <p>
-        Sie haben noch keine gespeicherte Waren oder sich noch nicht angemeldet.
-      </p>
+      <>
+        {isShowKasse ? (
+          <section>
+            <p>Die Gesamtpreis ist :{totalPrice}</p>
+            <form onSubmit={handleSubmitOrder}>
+              <label htmlFor="address">Addresse:</label>
+              <input type="text" id="address" name="address" required />
+              <h4>Zalungsart:</h4>
+              <div>
+                <input
+                  type="radio"
+                  value="paypal"
+                  id="paypal"
+                  name="payment"
+                  defaultChecked
+                />
+                <label htmlFor="paypal">Paypal</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  value="transfer"
+                  id="transfer"
+                  name="payment"
+                />
+                <label htmlFor="transfer">Überweisung</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  value="creditCard"
+                  id="creditCard"
+                  name="payment"
+                />
+                <label htmlFor="creditCard">Kreditkarte</label>
+              </div>
+              <button type="submit">Weiter</button>
+            </form>
+          </section>
+        ) : (
+          <section>
+            <ShoppingCartList
+              handleShoppingCartItemDelete={handleShoppingCartItemDelete}
+              user={user}
+              inCartProducts={inCartProducts}
+              handleMinus={handleMinus}
+              handlePlus={handlePlus}
+            />
+            <p>Die Gesamtpreis ist :{totalPrice}</p>
+            <button type="button" onClick={() => setIsShowKasse(!isShowKasse)}>
+              ZUR KASSE
+            </button>
+          </section>
+        )}
+      </>
     );
   }
 };

@@ -1,4 +1,5 @@
-import { Order } from "./global.type";
+import OrderedItem from "./OrderedItem";
+import { Order } from "../global.type";
 
 type OrderListProps = {
   orders: Order[] | undefined;
@@ -9,13 +10,10 @@ const OrderList = ({ orders }: OrderListProps) => {
     <>
       {orders?.map((order: Order) => {
         return (
-          <section key={order.id} className="order-list">
-            <p>Bestellungsnumber:{order.id}</p>
-            <p>
-              <strong>{order.productName}</strong>
-            </p>
+          <section key={order.orderNumber} className="order-list">
+            <p>Bestellungsnumber:{order.orderNumber}</p>
             <p>Datum:{order.date}</p>
-            <p>Menge:{order.quantity}</p>
+            <OrderedItem oderedItems={order.orderedProducts} />
           </section>
         );
       })}

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import OrderList from "../components/OrderList";
+import OrderList from "../components/OrderList/OrderList";
 import { User } from "../components/global.type";
 
 type UserAccountProps = {
