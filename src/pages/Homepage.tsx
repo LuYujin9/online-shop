@@ -1,16 +1,13 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import { useReadLocalStorage } from "usehooks-ts";
 import ProductCardList from "../components/ProductCardList/ProductCardList";
 import { products } from "../../public/data";
 import { User, Product } from "../components/global.type";
 
 type HomepageProps = {
   userName: string | null;
-  handleFavorite: (
-    id: string,
-    isFavorite: boolean,
-    user: User | undefined
-  ) => void;
-  handleShopping: (id: string, product: Product) => void;
+  handleFavorite: (id: string, isFavorite: boolean) => void;
+  handleShopping: (product: Product) => void;
 };
 
 const Homepage: React.FC<HomepageProps> = ({
@@ -18,6 +15,14 @@ const Homepage: React.FC<HomepageProps> = ({
   handleFavorite,
   handleShopping,
 }) => {
+  const users = useReadLocalStorage<User[] | null>("users");
+  const [user, setUser] = useState<User | undefined>(undefined);
+
+  useEffect(() => {
+    const user = users?.find((user) => user.name == userName);
+    setUser(user);
+  }, [users, userName]);
+
   return (
     <>
       <section>
@@ -40,7 +45,7 @@ const Homepage: React.FC<HomepageProps> = ({
       </section>
       <ProductCardList
         products={products}
-        userName={userName}
+        user={user}
         handleFavorite={handleFavorite}
         handleShopping={handleShopping}
       />

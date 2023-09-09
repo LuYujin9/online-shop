@@ -1,7 +1,8 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
+import { useImmer } from "use-immer";
 import Header from "./components/Header";
 import Homepage from "./pages/Homepage";
 import ShoppingCart from "./pages/ShoppingCart";
@@ -10,87 +11,55 @@ import UserAccount from "./pages/UserAccount";
 import Details from "./pages/[id]";
 import { User, Product } from "./components/global.type";
 
-type newUserData = {
-  [k: string]: FormDataEntryValue;
-};
-
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userPageMessage, setUserPageMessage] = useState("");
-  const [user, setUser] = useState<User | undefined>(undefined);
   const [userName, setUserName] = useState<string | null>("");
-  const [users, setUsers] = useLocalStorage("users", [] as User[]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [users, setUsers] = useLocalStorage<User[] | null>("users", null);
+  const [updatedUsers, setUpdatedUsers] = useImmer<User[] | null>(null);
 
-  const hangdleLogin = (newUserData: newUserData) => {
-    const user = users?.find(
-      (user) =>
-        user.name == newUserData.userName &&
-        user.password == newUserData.password
-    );
-    if (user) {
-      setUser(user);
-      setUserName(user.name);
-      setIsLoggedIn(true);
-      setUserPageMessage("");
-    } else {
-      setUserPageMessage(
-        "Benutzername oder Passwort sind falsch, bitte probieren Sie es noch einmal."
-      );
-    }
+  useEffect(() => {
+    setUsers(updatedUsers);
+  }, [updatedUsers, setUsers]);
+
+  const onUpdateLoginStatus = (userName: string | null) => {
+    setUserName(userName);
+    setIsLoggedIn(!isLoggedIn);
   };
 
-  const hangdleLogout = () => {
-    setUserName(null);
-    setIsLoggedIn(false);
-    setUserPageMessage("");
-  };
-
-  const handleFavorite = (
-    id: string,
-    isFavorite: boolean,
-    user: User | undefined
-  ) => {
-    if (user) {
-      let newFavorites: string[] = [];
-      if (isFavorite === false) {
-        newFavorites = [...user.favorites, id];
-      } else {
-        newFavorites = user.favorites.filter((favorite) => favorite !== id);
+  const handleFavorite = (id: string, isFavorite: boolean) => {
+    setUpdatedUsers(users);
+    setUpdatedUsers((draft) => {
+      const user = draft?.find((user) => user.name === userName);
+      if (isFavorite && user) {
+        user.favorites = user.favorites.filter((favorite) => favorite !== id);
+      } else if (user) {
+        user.favorites = [...user.favorites, id];
       }
-      const updatedUser = { ...user, favorites: newFavorites };
-      const updatedUsers = users.map((user) => {
-        if (user.name === updatedUser.name) {
-          return updatedUser;
-        } else return user;
-      });
-      setUsers(updatedUsers);
-    }
+    });
   };
 
-  const handleShopping = (id: string, product: Product) => {
-    const user = users?.find((user) => user.name == userName);
-    if (user) {
-      const newItem = {
-        productId: id,
-        productName: product.name,
-        photo: product.photos[1],
-        quantity: 1,
-      };
-
-      const filteredItems = user.shoppingCartItems.filter(
-        (item) => item.productId !== id
-      );
-      const updatedShoppingCartItems = [...filteredItems, newItem];
-      const upatedUser = {
-        ...user,
-        shoppingCartItems: updatedShoppingCartItems,
-      };
-      const filteredUsers = users.filter((user) => user.name !== userName);
-      const upatedUsers = [...filteredUsers, upatedUser];
-      setUsers(upatedUsers);
-    }
+  const handleShopping = (product: Product) => {
+    setUpdatedUsers(users);
+    setUpdatedUsers((draft) => {
+      const user = draft?.find((user) => user.name === userName);
+      if (user) {
+        const newItem = {
+          productId: product.id,
+          productName: product.name,
+          photo: product.photos[1],
+          quantity: 1,
+        };
+        const itemIndex = user.shoppingCartItems.findIndex(
+          (item) => item.productId === product.id
+        );
+        if (itemIndex !== -1) {
+          user.shoppingCartItems[itemIndex].quantity++;
+        } else {
+          user.shoppingCartItems = [...user.shoppingCartItems, newItem];
+        }
+      }
+    });
   };
-
   return (
     <>
       <Header />
@@ -123,11 +92,9 @@ function App() {
           path="/user-account"
           element={
             <UserAccount
-              user={user}
+              userName={userName}
+              onUpdateLoginStatus={onUpdateLoginStatus}
               isLoggedIn={isLoggedIn}
-              userPageMessage={userPageMessage}
-              onLogin={hangdleLogin}
-              onLogout={hangdleLogout}
             />
           }
         />

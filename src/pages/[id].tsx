@@ -15,7 +15,7 @@ type DetailsProps = {
     isFavorite: boolean,
     user: User | undefined
   ) => void;
-  handleShopping: (id: string, product: Product) => void;
+  handleShopping: (product: Product) => void;
 };
 
 const Details: React.FC<DetailsProps> = ({
@@ -47,7 +47,7 @@ const Details: React.FC<DetailsProps> = ({
   }
 
   const handleAddToCart = () => {
-    if (user) handleShopping(product.id, product);
+    if (userName) handleShopping(product);
   };
 
   return (
