@@ -18,7 +18,9 @@ function App() {
   const [updatedUsers, setUpdatedUsers] = useImmer<User[] | null>(null);
 
   useEffect(() => {
-    setUsers(updatedUsers);
+    if (updatedUsers !== null) {
+      setUsers(updatedUsers);
+    }
   }, [updatedUsers, setUsers]);
 
   const onUpdateLoginStatus = (userName: string | null) => {

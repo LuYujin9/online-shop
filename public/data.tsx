@@ -115,15 +115,7 @@ export const users = [
   {
     name: "Jin",
     password: "123456",
-    orders: [
-      {
-        id: "1",
-        productName: "Produkt 3",
-        date: "23.09.2023",
-        quantity: 3,
-        adress: "putlse.ejafe,938 ",
-      },
-    ],
+    orders: [],
     favorites: ["1", "2"],
     shoppingCartItems: [
       {
@@ -145,17 +137,22 @@ export const users = [
     password: "1",
     orders: [
       {
-        id: "1",
-        productName: "Produkt 1",
+        orderNumber: "1",
+        orderedProducts: [
+          {
+            productId: "1",
+            productName: "Produkt 1",
+            photo: "/images/product1-1.jpg",
+            quantity: 1,
+          },
+          {
+            productId: "2",
+            productName: "Produkt 2",
+            photo: "/images/product2-1.jpg",
+            quantity: 2,
+          },
+        ],
         date: "08.09.2023",
-        quantity: 1,
-        adress: "putlse.ejafe,938 ",
-      },
-      {
-        id: "2",
-        productName: "Produkt 2",
-        date: "08.07.2023",
-        quantity: 2,
         adress: "putlse.ejafe,938 ",
       },
     ],
