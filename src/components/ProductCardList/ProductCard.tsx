@@ -8,11 +8,7 @@ import AddToCartButton from "../AddToCartButton";
 type ProductCardProps = {
   product: Product;
   user: User | undefined;
-  handleFavorite: (
-    id: string,
-    isFavorite: boolean,
-    user: User | undefined
-  ) => void;
+  handleFavorite: (id: string, isFavorite: boolean) => void;
   handleShopping: (product: Product) => void;
 };
 
@@ -33,7 +29,7 @@ const ProductCard = ({
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
-    handleFavorite(product.id, isFavorite, user);
+    handleFavorite(product.id, isFavorite);
   };
 
   const handleAddToCart = () => {

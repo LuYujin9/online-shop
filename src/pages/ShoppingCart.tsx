@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { useImmer } from "use-immer";
 import ShoppingCartList from "../components/ShoppingCartList/ShoppingCartList";
@@ -12,8 +12,8 @@ type ShoppingCartProps = {
 const ShoppingCart: React.FC<ShoppingCartProps> = ({ userName }) => {
   const [users, setUsers] = useLocalStorage<User[] | null>("users", null);
   const [updatedUsers, setUpdatedUsers] = useImmer<User[] | null>(users);
+  const [user, setUser] = useState<User | null>(null);
 
-  const user = users?.find((user) => user.name === userName);
   const itemsId = user?.shoppingCartItems.map((item) => item.productId);
   const inCartProducts = products.filter((product) =>
     itemsId?.includes(product.id)
@@ -22,6 +22,11 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ userName }) => {
   useEffect(() => {
     setUsers(updatedUsers);
   }, [updatedUsers, setUsers]);
+
+  useEffect(() => {
+    const user = users?.find((user) => user.name === userName);
+    setUser(user ? user : null);
+  }, [users, userName, setUser]);
 
   const eachItemTotalPrices: number[] = [0];
   if (user) {

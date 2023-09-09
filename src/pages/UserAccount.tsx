@@ -1,34 +1,31 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import OrderList from "../components/OrderList";
 import { User } from "../components/global.type";
 
 type UserAccountProps = {
+  userName: string | null;
+  onUpdateLoginStatus: (loggedInUserName: string | null) => void;
   isLoggedIn: boolean;
-  userPageMessage: string;
-  onLogin: (newUserData: { [k: string]: FormDataEntryValue }) => void;
-  onLogout: () => void;
 };
 
-type users = User[];
-
 const UserAccount: React.FC<UserAccountProps> = ({
+  userName,
+  onUpdateLoginStatus,
   isLoggedIn,
-  userPageMessage,
-  onLogin,
-  onLogout,
 }) => {
-  const [users, setUsers] = useLocalStorage("users", [] as users);
-  const [registerName, setRegisterName] = useState("");
+  const [users, setUsers] = useLocalStorage<User[] | null>("users", null);
   const [user, setUser] = useState<User | undefined>(undefined);
   const registerPasswordRef = useRef<HTMLInputElement | null>(null);
-  const [RegisterMessage, setRegisterMessage] = useState("");
+  const [registerName, setRegisterName] = useState("");
   const [isShowRegisterForm, setIsShowRegisterForm] = useState(false);
+  const [RegisterMessage, setRegisterMessage] = useState("");
+  const [userPageMessage, setUserPageMessage] = useState("");
 
-  const names: string[] = [];
-  if (users) {
-    users.forEach((user) => names.push(user.name));
-  }
+  useEffect(() => {
+    const user = users?.find((user) => user.name == userName);
+    setUser(user);
+  }, [users, userName]);
 
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -39,24 +36,40 @@ const UserAccount: React.FC<UserAccountProps> = ({
         user.name == newUserData.userName &&
         user.password == newUserData.password
     );
-    setUser(user);
-    onLogin(newUserData);
+    if (user) {
+      onUpdateLoginStatus(user.name);
+      setUserPageMessage("");
+    } else {
+      setUserPageMessage(
+        "Benutzername oder Passwort sind falsch, bitte probieren Sie es noch einmal."
+      );
+    }
+  };
+
+  const hangdleLogout = () => {
+    onUpdateLoginStatus(null);
+    setUserPageMessage("");
   };
 
   const toggleShowRegisterForm: React.MouseEventHandler<
     HTMLButtonElement
   > = () => {
+    setUserPageMessage("");
     setIsShowRegisterForm(!isShowRegisterForm);
   };
 
   const handleName: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const newName: string = event.target.value;
+    const names: string[] = [];
+    if (users) {
+      users.forEach((user) => names.push(user.name));
+    }
     if (names.includes(newName)) {
       setRegisterMessage(
         "Es gibt diesen Benutzernamen bereits. Bitte wählen Sie einen anderen."
       );
     } else {
-      setRegisterMessage("Der Benutzername kann nicht gewählt werden.");
+      setRegisterMessage("");
       setRegisterName(newName);
     }
   };
@@ -66,14 +79,10 @@ const UserAccount: React.FC<UserAccountProps> = ({
   ) => {
     event.preventDefault();
     if (
-      !registerPasswordRef.current ||
-      !registerPasswordRef.current.value ||
-      registerName === ""
+      registerPasswordRef.current &&
+      registerPasswordRef.current.value &&
+      registerName.length !== 0
     ) {
-      setRegisterMessage(
-        "Regestrierung war nicht erfolgreich. Bitte geben Sie einen gültigen Benutzername und Passwort ein."
-      );
-    } else {
       const registerPassword: string = registerPasswordRef.current.value;
       const newUser: User = {
         name: registerName,
@@ -82,11 +91,22 @@ const UserAccount: React.FC<UserAccountProps> = ({
         favorites: [],
         shoppingCartItems: [],
       };
-      users.push(newUser);
-      setUsers(users);
-      setRegisterMessage("Regestierung war erfolgreich.");
+      let updatedUsers;
+      if (users) {
+        updatedUsers = [...users, newUser];
+      } else {
+        updatedUsers = [newUser];
+      }
+      setUsers(updatedUsers);
+      setUserPageMessage(
+        "Regestierung war erfolgreich.Bitte melden Sie sich jetzt an"
+      );
       setRegisterName("");
       setIsShowRegisterForm(false);
+    } else {
+      setRegisterMessage(
+        "Regestrierung war nicht erfolgreich. Bitte geben Sie einen gültigen Benutzername und Passwort ein."
+      );
     }
   };
 
@@ -94,8 +114,8 @@ const UserAccount: React.FC<UserAccountProps> = ({
     <>
       {isLoggedIn ? (
         <main>
-          <p>{user?.name}</p>
-          <button onClick={onLogout}>Abmelden</button>
+          <p>Hallo,{user?.name}. Wellkommen zurück!</p>
+          <button onClick={hangdleLogout}>Abmelden</button>
           <OrderList orders={user?.orders} />
         </main>
       ) : (

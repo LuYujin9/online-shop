@@ -11,45 +11,23 @@ import UserAccount from "./pages/UserAccount";
 import Details from "./pages/[id]";
 import { User, Product } from "./components/global.type";
 
-type newUserData = {
-  [k: string]: FormDataEntryValue;
-};
-
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userPageMessage, setUserPageMessage] = useState("");
   const [userName, setUserName] = useState<string | null>("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [users, setUsers] = useLocalStorage<User[] | null>("users", null);
-  const [updatedUsers, setUpdatedUsers] = useImmer<User[] | null>(users);
+  const [updatedUsers, setUpdatedUsers] = useImmer<User[] | null>(null);
 
   useEffect(() => {
     setUsers(updatedUsers);
   }, [updatedUsers, setUsers]);
 
-  const hangdleLogin = (newUserData: newUserData) => {
-    const user = users?.find(
-      (user) =>
-        user.name == newUserData.userName &&
-        user.password == newUserData.password
-    );
-    if (user) {
-      setUserName(user.name);
-      setIsLoggedIn(true);
-      setUserPageMessage("");
-    } else {
-      setUserPageMessage(
-        "Benutzername oder Passwort sind falsch, bitte probieren Sie es noch einmal."
-      );
-    }
-  };
-
-  const hangdleLogout = () => {
-    setUserName(null);
-    setIsLoggedIn(false);
-    setUserPageMessage("");
+  const onUpdateLoginStatus = (userName: string | null) => {
+    setUserName(userName);
+    setIsLoggedIn(!isLoggedIn);
   };
 
   const handleFavorite = (id: string, isFavorite: boolean) => {
+    setUpdatedUsers(users);
     setUpdatedUsers((draft) => {
       const user = draft?.find((user) => user.name === userName);
       if (isFavorite && user) {
@@ -61,6 +39,7 @@ function App() {
   };
 
   const handleShopping = (product: Product) => {
+    setUpdatedUsers(users);
     setUpdatedUsers((draft) => {
       const user = draft?.find((user) => user.name === userName);
       if (user) {
@@ -81,7 +60,6 @@ function App() {
       }
     });
   };
-
   return (
     <>
       <Header />
@@ -114,10 +92,9 @@ function App() {
           path="/user-account"
           element={
             <UserAccount
+              userName={userName}
+              onUpdateLoginStatus={onUpdateLoginStatus}
               isLoggedIn={isLoggedIn}
-              userPageMessage={userPageMessage}
-              onLogin={hangdleLogin}
-              onLogout={hangdleLogout}
             />
           }
         />
