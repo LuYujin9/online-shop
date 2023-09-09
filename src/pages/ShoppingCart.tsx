@@ -23,15 +23,17 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ userName }) => {
     setUsers(updatedUsers);
   }, [updatedUsers, setUsers]);
 
-  const eachItemTotalPrices: number[] = [];
-  user?.shoppingCartItems.forEach((item) => {
-    const index = products.findIndex(
-      (product) => product.id === item.productId
-    );
-    const price = products[index].price;
-    const eachItemTotalPrice = price * item.quantity;
-    eachItemTotalPrices.push(eachItemTotalPrice);
-  });
+  const eachItemTotalPrices: number[] = [0];
+  if (user) {
+    user.shoppingCartItems.forEach((item) => {
+      const index = products.findIndex(
+        (product) => product.id === item.productId
+      );
+      const price = products[index].price;
+      const eachItemTotalPrice = price * item.quantity;
+      eachItemTotalPrices.push(eachItemTotalPrice);
+    });
+  }
   const totalPrice = eachItemTotalPrices.reduce((a, b) => a + b);
 
   const handleShoppingCartItemDelete = (id: string) => {
