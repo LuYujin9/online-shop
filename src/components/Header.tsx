@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import {
@@ -10,40 +11,55 @@ import {
 
 const Header = () => {
   const navigate = useNavigate();
-
+  const iconStyles = { color: "white", fontSize: "1.2em" };
   return (
-    <header>
-      <button onClick={() => navigate(-1)}>
-        <FiChevronLeft />
-      </button>
-      <h1>Handmade Shop</h1>
-      <nav>
-        <NavLink activeclassname="active-link" className="header-link" to="/">
-          <FiHome />
-        </NavLink>
-        <NavLink
-          activeclassname="active-link"
-          className="header-link"
-          to="/shopping-cart"
-        >
-          <FiShoppingCart />
-        </NavLink>
-        <NavLink
-          activeclassname="active-link"
-          className="header-link"
-          to="/favorite"
-        >
-          <FiStar />
-        </NavLink>
-        <NavLink
-          activeclassname="active-link"
-          className="header-link"
-          to="/user-account"
-        >
-          <FiUser />
-        </NavLink>
-      </nav>
-    </header>
+    <StyledHeader>
+      <StyledButton onClick={() => navigate(-1)}>
+        <FiChevronLeft style={iconStyles} aria-lable="back" />
+      </StyledButton>
+      <h1>Jin's Handmade</h1>
+      <StyledNav>
+        <StyledNavLink to="/">
+          <FiHome style={iconStyles} aria-lable="back" />
+        </StyledNavLink>
+        <StyledNavLink to="/shopping-cart">
+          <FiShoppingCart style={iconStyles} aria-lable="shopping cart" />
+        </StyledNavLink>
+        <StyledNavLink to="/favorite">
+          <FiStar style={iconStyles} aria-lable="favorite list" />
+        </StyledNavLink>
+        <StyledNavLink to="/user-account">
+          <FiUser style={iconStyles} aria-lable="user account" />
+        </StyledNavLink>
+      </StyledNav>
+    </StyledHeader>
   );
 };
 export default Header;
+
+const StyledButton = styled.button`
+  border: none;
+  background-color: var(--color-05);
+`;
+
+const StyledHeader = styled.header`
+  margin: auto;
+  width: 100vw;
+  height: 3em;
+  background-color: var(--color-05);
+
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  top: 0;
+`;
+
+const StyledNav = styled.nav`
+  margin: auto;
+  margin-right: 0.5rem;
+`;
+
+const StyledNavLink = styled(NavLink)`
+  margin: auto;
+  padding: 0.3em;
+`;

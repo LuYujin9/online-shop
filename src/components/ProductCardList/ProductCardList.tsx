@@ -15,7 +15,7 @@ const ProductCardList = ({
   handleShopping,
 }: ProductCardListProps) => {
   return (
-    <>
+    <div>
       {products?.map((product) => (
         <ProductCard
           key={product.id}
@@ -25,7 +25,7 @@ const ProductCardList = ({
           handleShopping={handleShopping}
         />
       ))}
-    </>
+    </div>
   );
 };
 export default ProductCardList;
