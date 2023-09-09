@@ -51,7 +51,7 @@ const ProductCard = ({
         <StyledImg alt="product photo" src={product.photos[0]} />
       </NavLink>
       <DescriptionContainer>
-        <h3>€{product.price}</h3>
+        <h3>{product.price} €</h3>
         <h4>{product.name}</h4>
       </DescriptionContainer>
       <BookmarkButton isFavorite={isFavorite} toggleFavorite={toggleFavorite} />
@@ -76,6 +76,6 @@ const DescriptionContainer = styled.div`
   margin: 0;
   padding: 0.5em 0;
   width: 100%;
-  border-radius: 15px;
+  border-radius: 1em;
   background-color: white;
 `;

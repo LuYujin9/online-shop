@@ -20,16 +20,16 @@ const Header = () => {
       <h1>Jin's Handmade</h1>
       <StyledNav>
         <StyledNavLink to="/">
-          <FiHome style={iconStyles} aria-lable="back" />
+          <FiHome style={iconStyles} aria-label="back" />
         </StyledNavLink>
         <StyledNavLink to="/shopping-cart">
-          <FiShoppingCart style={iconStyles} aria-lable="shopping cart" />
+          <FiShoppingCart style={iconStyles} aria-label="shopping cart" />
         </StyledNavLink>
         <StyledNavLink to="/favorite">
-          <FiStar style={iconStyles} aria-lable="favorite list" />
+          <FiStar style={iconStyles} aria-label="favorite list" />
         </StyledNavLink>
         <StyledNavLink to="/user-account">
-          <FiUser style={iconStyles} aria-lable="user account" />
+          <FiUser style={iconStyles} aria-label="user account" />
         </StyledNavLink>
       </StyledNav>
     </StyledHeader>

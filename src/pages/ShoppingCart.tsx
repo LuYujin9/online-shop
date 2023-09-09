@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { useImmer } from "use-immer";
@@ -123,17 +124,24 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ userName }) => {
   };
 
   if (!user || user.shoppingCartItems.length === 0) {
-    return <p>{cartMessage}</p>;
+    return <h4>{cartMessage}</h4>;
   } else {
     return (
-      <>
+      <main>
         {isShowKasse ? (
-          <section>
-            <p>Die Gesamtpreis ist :{totalPrice}</p>
-            <form onSubmit={handleSubmitOrder}>
-              <label htmlFor="address">Addresse:</label>
-              <input type="text" id="address" name="address" required />
-              <h4>Zalungsart:</h4>
+          <StyledContainer>
+            <h4>Die Gesamtpreis ist: {totalPrice}</h4>
+            <StyledForm onSubmit={handleSubmitOrder}>
+              <StyledLabel htmlFor="address">Addresse:</StyledLabel>
+              <textarea
+                rows={2}
+                cols={5}
+                id="address"
+                name="address"
+                minLength={15}
+                required
+              />
+              <StyledLabel>Zalungsart:</StyledLabel>
               <div>
                 <input
                   type="radio"
@@ -162,11 +170,19 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ userName }) => {
                 />
                 <label htmlFor="creditCard">Kreditkarte</label>
               </div>
-              <button type="submit">Weiter</button>
-            </form>
-          </section>
+              <ButtonContainer>
+                <SyledButton
+                  type="button"
+                  onClick={() => setIsShowKasse(!isShowKasse)}
+                >
+                  Zurück
+                </SyledButton>
+                <SyledButton type="submit">Weiter</SyledButton>
+              </ButtonContainer>
+            </StyledForm>
+          </StyledContainer>
         ) : (
-          <section>
+          <StyledContainer>
             <ShoppingCartList
               handleShoppingCartItemDelete={handleShoppingCartItemDelete}
               user={user}
@@ -174,14 +190,52 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ userName }) => {
               handleMinus={handleMinus}
               handlePlus={handlePlus}
             />
-            <p>Die Gesamtpreis ist :{totalPrice}</p>
-            <button type="button" onClick={() => setIsShowKasse(!isShowKasse)}>
+            <h4>Die Gesamtpreis ist: {totalPrice.toFixed(2)} €</h4>
+            <SyledButton
+              type="button"
+              onClick={() => setIsShowKasse(!isShowKasse)}
+            >
               ZUR KASSE
-            </button>
-          </section>
+            </SyledButton>
+          </StyledContainer>
         )}
-      </>
+      </main>
     );
   }
 };
 export default ShoppingCart;
+
+const StyledContainer = styled.div`
+  margin: 4em 3% 2em 3%;
+  margin-top: 4em;
+  width: 94%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledForm = styled.form`
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+const StyledLabel = styled.label`
+  margin: 1em auto auto 1em;
+  font-size: 1em;
+  font-weight: bold;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+const SyledButton = styled.button`
+  margin: auto;
+  width: 10em;
+  height: 3em;
+  color: white;
+  background-color: var(--color-03);
+  border: none;
+  border-radius: 1em;
+`;
