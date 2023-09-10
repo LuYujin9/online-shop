@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useReadLocalStorage } from "usehooks-ts";
@@ -51,22 +52,47 @@ const Details: React.FC<DetailsProps> = ({
   };
 
   return (
-    <>
-      <BookmarkButton isFavorite={isFavorite} toggleFavorite={toggleFavorite} />
-      <AddToCartButton handleAddToCart={handleAddToCart} />
-      <h4>{product.name}</h4>
-      <p>{product.stock}</p>
-      <p>{product.price}</p>
-      {product.photos.map((photo) => (
-        <img
-          alt="product photo"
-          src={photo}
-          className="product-photo"
-          key={photo}
-        />
-      ))}
-      <p>{product.description}</p>
-    </>
+    <main>
+      <StyledSection>
+        <DescriptionContainer>
+          <h3>{product.name}</h3>
+          <h4>{product.price} €</h4>
+          <BookmarkButton
+            isFavorite={isFavorite}
+            toggleFavorite={toggleFavorite}
+          />
+          <AddToCartButton handleAddToCart={handleAddToCart} />
+        </DescriptionContainer>
+        {product.photos.map((photo) => (
+          <StyledImg
+            alt="product photo"
+            src={photo}
+            className="product-photo"
+            key={photo}
+          />
+        ))}
+        <p>{product.description}</p>
+      </StyledSection>
+    </main>
   );
 };
 export default Details;
+
+const StyledSection = styled.section`
+  margin: 4em auto;
+  width: 94%;
+`;
+
+const DescriptionContainer = styled.div`
+  margin: 0.5em 0;
+  padding: 1em 0;
+  width: 100%;
+  height: 6em;
+  border-radius: 1em;
+  background-color: white;
+`;
+
+const StyledImg = styled.img`
+  width: 100%;
+  height: 80vw;
+`;

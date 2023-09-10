@@ -11,12 +11,9 @@ const BookmarkButton = ({
   toggleFavorite,
 }: BookmarkButtonProps) => {
   const iconStyles = { color: `var(--color-05)`, fontSize: "1.6em" };
+  const buttonColor = isFavorite ? "var(--color-04)" : "white";
   return (
-    <StyledButton
-      type="button"
-      onClick={toggleFavorite}
-      isFavorite={isFavorite}
-    >
+    <StyledButton type="button" onClick={toggleFavorite} color={buttonColor}>
       <FiStar style={iconStyles} />
     </StyledButton>
   );
@@ -24,11 +21,10 @@ const BookmarkButton = ({
 
 export default BookmarkButton;
 
-const StyledButton = styled.button<{ isFavorite: boolean }>`
+const StyledButton = styled.button`
   width: 2.5em;
   height: 2.5em;
-  background-color: ${(props) =>
-    props.isFavorite ? "var(--color-04)" : "white"};
+  background-color: ${(props) => props.color};
   border: none;
   border-radius: 1.5em;
 

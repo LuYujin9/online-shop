@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useReadLocalStorage } from "usehooks-ts";
 import ProductCardList from "../components/ProductCardList/ProductCardList";
+import { RiCustomerService2Fill } from "react-icons/ri";
 import { products } from "../../public/data";
 import { User, Product } from "../components/global.type";
 
@@ -32,7 +33,7 @@ const Homepage: React.FC<HomepageProps> = ({
           Hi,ich bin Jin und fertige jedes einzelne Stück persönlich und mit
           größter Hingabe an. Jedes dieser Unikate wird von Herzen geschaffen.
         </p>
-        <StyledImg
+        <LogoImg
           src="/images/descriptionPhoto2.jpg"
           alt="with description"
           className="description-photo"
@@ -42,6 +43,15 @@ const Homepage: React.FC<HomepageProps> = ({
           zarte Pflanze, behutsam in meiner Hand gepflegt. Denn mein Wunsch ist
           es, dass die Herzen eines jeden Menschen mit Liebe und Geborgenheit
           erfüllt sind :)
+        </p>
+        <br />
+        <StyledLink href="mailto: wuwujane@hotmail.com">
+          <RiCustomerService2Fill color="white" fontSize="2em" />
+          KONTACT MICH
+        </StyledLink>
+        <p>
+          Wenn Sie Fragen haben oder individuelle Artikel wünschen,zögern Sie
+          nicht, mich jetzt zu kontaktieren!
         </p>
       </StyledSection>
       <ProductCardList
@@ -65,7 +75,19 @@ const OwnerImg = styled.img`
   width: 100%;
 `;
 
-const StyledImg = styled.img`
+const LogoImg = styled.img`
   margin: 0 7%;
   width: 80%;
+`;
+
+const StyledLink = styled.a`
+  margin: 0.5em auto;
+  width: 12em;
+  height: 3em;
+  border-radius: 1em;
+  color: white;
+  background-color: var(--color-03);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 `;

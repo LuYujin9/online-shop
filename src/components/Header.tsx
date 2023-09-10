@@ -8,8 +8,13 @@ import {
   FiStar,
   FiUser,
 } from "react-icons/fi";
+import CartBadge from "./Cartbadge";
 
-const Header = () => {
+type HeaderProps = {
+  itemCount: number;
+};
+
+const Header = ({ itemCount }: HeaderProps) => {
   const navigate = useNavigate();
   const iconStyles = { color: "white", fontSize: "1.2em" };
   return (
@@ -25,6 +30,7 @@ const Header = () => {
         <StyledNavLink to="/shopping-cart">
           <FiShoppingCart style={iconStyles} aria-label="shopping cart" />
         </StyledNavLink>
+        <CartBadge itemCount={itemCount} />
         <StyledNavLink to="/favorite">
           <FiStar style={iconStyles} aria-label="favorite list" />
         </StyledNavLink>
@@ -58,6 +64,7 @@ const StyledHeader = styled.header`
 const StyledNav = styled.nav`
   margin: auto;
   margin-right: 0.5rem;
+  display: flex;
 `;
 
 const StyledNavLink = styled(NavLink)`

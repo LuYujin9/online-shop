@@ -14,6 +14,7 @@ import { User, Product } from "./components/global.type";
 function App() {
   const [userName, setUserName] = useState<string | null>("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [itemCount, setItemCount] = useState(0);
   const [users, setUsers] = useLocalStorage<User[] | null>("users", null);
   const [updatedUsers, setUpdatedUsers] = useImmer<User[] | null>(null);
 
@@ -22,6 +23,12 @@ function App() {
       setUsers(updatedUsers);
     }
   }, [updatedUsers, setUsers]);
+
+  useEffect(() => {
+    const itemCount = users?.find((user) => user.name === userName)
+      ?.shoppingCartItems.length;
+    setItemCount(itemCount ? itemCount : 0);
+  }, [users, userName]);
 
   const onUpdateLoginStatus = (userName: string | null) => {
     setUserName(userName);
@@ -64,7 +71,7 @@ function App() {
   };
   return (
     <>
-      <Header />
+      <Header itemCount={itemCount} />
       <Routes>
         <Route
           path="/"
