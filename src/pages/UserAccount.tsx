@@ -124,7 +124,7 @@ const UserAccount: React.FC<UserAccountProps> = ({
       ) : (
         <main>
           {isShowRegisterForm ? (
-            <StyledContainer>
+            <StyledSection>
               <StyledButton onClick={toggleShowRegisterForm}>
                 Zur Anmeldung
               </StyledButton>
@@ -154,7 +154,7 @@ const UserAccount: React.FC<UserAccountProps> = ({
                 </SubmitButton>
                 <p>{RegisterMessage}</p>
               </StyledForm>
-            </StyledContainer>
+            </StyledSection>
           ) : (
             <StyledSection>
               <StyledForm onSubmit={(event) => handleLogin(event)}>
@@ -196,9 +196,6 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
-/* const StyledSection = styled.section``
-const StyledSection = styled.section``
-const StyledSection = styled.section`` */
 
 const StyledSection = styled.section`
   margin: auto;
@@ -233,6 +230,7 @@ const StyledButton = styled.button`
   color: white;
   background-color: var(--color-03);
   font-weight: bold;
+  box-shadow: 1px 1px 1px 1px var(--color-04);
 `;
 
 const SubmitButton = styled.button`

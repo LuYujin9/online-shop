@@ -1,4 +1,5 @@
 import styled from "styled-components";
+//import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import {
@@ -12,11 +13,24 @@ import CartBadge from "./Cartbadge";
 
 type HeaderProps = {
   itemCount: number;
+  isShowCartMessage: boolean;
 };
 
-const Header = ({ itemCount }: HeaderProps) => {
+const Header = ({ itemCount, isShowCartMessage }: HeaderProps) => {
+  //const [isShowMessage, setIsShowMessage] = useState(false);
+
   const navigate = useNavigate();
   const iconStyles = { color: "white", fontSize: "1.2em" };
+
+  /*   useEffect(() => {
+    if (isShowCartMessage) {
+      setIsShowMessage(true);
+      setTimeout(() => {
+        setIsShowMessage(false);
+      }, 2000);
+    }
+  }, [isShowCartMessage]); */
+
   return (
     <StyledHeader>
       <StyledButton onClick={() => navigate(-1)}>
@@ -31,6 +45,11 @@ const Header = ({ itemCount }: HeaderProps) => {
           <FiShoppingCart style={iconStyles} aria-label="shopping cart" />
         </StyledNavLink>
         <CartBadge itemCount={itemCount} />
+        <Styledparagraph
+          className={isShowCartMessage ? "slide-in-show " : "slide-in "}
+        >
+          Artikel hinzufügt
+        </Styledparagraph>
         <StyledNavLink to="/favorite">
           <FiStar style={iconStyles} aria-label="favorite list" />
         </StyledNavLink>
@@ -70,4 +89,17 @@ const StyledNav = styled.nav`
 const StyledNavLink = styled(NavLink)`
   margin: auto;
   padding: 0.3em;
+`;
+
+const Styledparagraph = styled.p`
+  margin: 0;
+  padding: 0.2em 0.5em;
+  border-radius: 0.5em;
+  color: white;
+  background-color: var(--color-03);
+  font-weight: bold;
+
+  position: absolute;
+  top: 2.5em;
+  right: 1em;
 `;

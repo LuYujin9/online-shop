@@ -15,6 +15,7 @@ function App() {
   const [userName, setUserName] = useState<string | null>("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [itemCount, setItemCount] = useState(0);
+  const [isShowCartMessage, setIsShowCartMessage] = useState(false);
   const [users, setUsers] = useLocalStorage<User[] | null>("users", null);
   const [updatedUsers, setUpdatedUsers] = useImmer<User[] | null>(null);
 
@@ -68,10 +69,14 @@ function App() {
         }
       }
     });
+    setIsShowCartMessage(true);
+    setTimeout(() => {
+      setIsShowCartMessage(false);
+    }, 3000);
   };
   return (
     <>
-      <Header itemCount={itemCount} />
+      <Header itemCount={itemCount} isShowCartMessage={isShowCartMessage} />
       <Routes>
         <Route
           path="/"

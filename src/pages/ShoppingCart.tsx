@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { useImmer } from "use-immer";
 import uuid from "react-uuid";
+import { NavLink } from "react-router-dom";
 import ShoppingCartList from "../components/ShoppingCartList/ShoppingCartList";
 import { User } from "../components/global.type";
 import { products } from "../../public/data";
@@ -124,7 +125,12 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ userName }) => {
   };
 
   if (!user || user.shoppingCartItems.length === 0) {
-    return <h4>{cartMessage}</h4>;
+    return (
+      <>
+        <h4>{cartMessage}</h4>
+        <StyledNavLink to="/user-account">Userkonto</StyledNavLink>
+      </>
+    );
   } else {
     return (
       <main>
@@ -230,6 +236,21 @@ const ButtonContainer = styled.div`
   justify-content: space-evenly;
 `;
 
+const StyledNavLink = styled(NavLink)`
+  margin: 1em auto;
+  width: 8em;
+  padding: 0.5em 1.5em;
+  border: none;
+  border-radius: 0.5em;
+  color: white;
+  background-color: var(--color-03);
+
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 1px 1px 1px 1px var(--color-04);
+  display: flex;
+`;
+
 const SyledButton = styled.button`
   margin: auto;
   width: 10em;
@@ -238,4 +259,5 @@ const SyledButton = styled.button`
   background-color: var(--color-03);
   border: none;
   border-radius: 1em;
+  box-shadow: 1px 1px 1px 1px var(--color-04);
 `;

@@ -22,6 +22,7 @@ const StyledButton = styled.button`
   background-color: var(--color-03);
   border: none;
   border-radius: 1.5em;
+  box-shadow: 1px 1px 1px 1px var(--color-02);
 
   position: relative;
   left: 70%;

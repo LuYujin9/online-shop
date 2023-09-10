@@ -4,13 +4,12 @@
   box-sizing: border-box;
 }
 
-/* .test {
-  width: 80%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  grid-template-areas:
-    "h4 DeleteButton"
-    "p DeleteButton"
-    "QuantityChangeContainer QuantityChangeContainer";
-} */
+.slide-in {
+  transform: translateX(115%);
+  transition: transform 2s ease-in-out;
+}
+
+.slide-in-show {
+  transform: translateX(0);
+  transition: transform 1s ease-in-out;
+}

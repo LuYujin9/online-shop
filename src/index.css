@@ -66,3 +66,7 @@ p {
 img {
   object-fit: cover;
 }
+
+button:active {
+  transform: translateY(1px);
+}
