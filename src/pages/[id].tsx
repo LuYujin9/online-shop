@@ -41,14 +41,22 @@ const Details: React.FC<DetailsProps> = ({
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
-    if (product) handleFavorite(product.id, isFavorite, user);
+    if (product && userName) {
+      handleFavorite(product.id, isFavorite, user);
+    } else {
+      alert("Bitte melden Sie sich an.");
+    }
   };
   if (!product) {
     return <p>Ooops, etwas ist false.</p>;
   }
 
   const handleAddToCart = () => {
-    if (userName) handleShopping(product);
+    if (userName) {
+      handleShopping(product);
+    } else {
+      alert("Bitte melden Sie sich an.");
+    }
   };
 
   return (
@@ -63,14 +71,16 @@ const Details: React.FC<DetailsProps> = ({
           />
           <AddToCartButton handleAddToCart={handleAddToCart} />
         </DescriptionContainer>
-        {product.photos.map((photo) => (
-          <StyledImg
-            alt="product photo"
-            src={photo}
-            className="product-photo"
-            key={photo}
-          />
-        ))}
+        <StyledImgContainer>
+          {product.photos.map((photo) => (
+            <StyledImg
+              alt="product photo"
+              src={photo}
+              className="product-photo"
+              key={photo}
+            />
+          ))}
+        </StyledImgContainer>
         <p>{product.description}</p>
       </StyledSection>
     </main>
@@ -90,9 +100,23 @@ const DescriptionContainer = styled.div`
   height: 6em;
   border-radius: 1em;
   background-color: white;
+  @media screen and (min-width: 600px) {
+ 
+`;
+
+const StyledImgContainer = styled.div`
+  @media screen and (min-width: 600px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 2em;
+    justify-content: center;
+  }
 `;
 
 const StyledImg = styled.img`
   width: 100%;
   height: 80vw;
+  @media screen and (min-width: 600px) {
+    height: 40vw;
+  }
 `;

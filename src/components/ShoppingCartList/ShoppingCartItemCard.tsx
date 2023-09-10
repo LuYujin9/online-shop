@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 import { FiTrash2 } from "react-icons/fi";
 import { Product, User } from "../global.type";
 
@@ -24,8 +25,9 @@ const ShoppingCartItemCard = ({
   if (quantity) {
     return (
       <CardContainer>
-        <StyledImg src={product.photos[0]} alt="photo of product" />
-
+        <StyledNavLink to={`/${product.id}`}>
+          <StyledImg src={product.photos[0]} alt="photo of product" />
+        </StyledNavLink>
         <StyledH4>{product.name}</StyledH4>
         <StyledParagraph> {product.price} €</StyledParagraph>
         <DeleteButton
@@ -70,10 +72,15 @@ const CardContainer = styled.div`
     "a e e";
 `;
 
+const StyledNavLink = styled(NavLink)`
+  grid-area: a;
+`;
+
 const StyledImg = styled.img`
   width: 100%;
+  max-width: 10em;
   height: 100%;
-  grid-area: a;
+  max-height: 6em;
 `;
 
 const StyledH4 = styled.h4`

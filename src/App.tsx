@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
 import { useImmer } from "use-immer";
-import Header from "./components/Header";
+import Header from "./components/Header/Header";
 import Homepage from "./pages/Homepage";
 import ShoppingCart from "./pages/ShoppingCart";
 import Favorite from "./pages/Favorite";

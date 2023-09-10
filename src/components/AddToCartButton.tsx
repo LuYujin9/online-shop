@@ -27,4 +27,7 @@ const StyledButton = styled.button`
   position: relative;
   left: 70%;
   bottom: 5em;
+
+  @media screen and (min-width: 600px) {
+    left: 55%;
 `;

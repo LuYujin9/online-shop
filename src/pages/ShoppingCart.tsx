@@ -16,7 +16,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ userName }) => {
   const [users, setUsers] = useLocalStorage<User[] | null>("users", null);
   const [updatedUsers, setUpdatedUsers] = useImmer<User[] | null>(users);
   const [user, setUser] = useState<User | null>(null);
-  const [isShowKasse, setIsShowKasse] = useState(false);
+  const [isShowCheckout, setIsShowCheckout] = useState(false);
   const [cartMessage, setCartMessage] = useState(
     "Sie haben noch keine gespeicherte Waren oder sich noch nicht angemeldet."
   );
@@ -120,28 +120,27 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ userName }) => {
     });
     setUsers(updatedUsers);
     setCartMessage(
-      "Erfoglreich bestellt. Bitte siehen Sie die Bestellung in Ihrem Konto."
+      "Erfoglreich bestellt. Bitte überprüfen Sie die Bestellung in Ihrem Konto."
     );
   };
 
   if (!user || user.shoppingCartItems.length === 0) {
     return (
-      <>
-        <h4>{cartMessage}</h4>
+      <main>
+        <h5>{cartMessage}</h5>
         <StyledNavLink to="/user-account">Userkonto</StyledNavLink>
-      </>
+      </main>
     );
   } else {
     return (
       <main>
-        {isShowKasse ? (
-          <StyledContainer>
-            <h4>Die Gesamtpreis ist: {totalPrice}</h4>
+        {isShowCheckout ? (
+          <CheckoutContainer>
+            <h4>Die Gesamtpreise ist: {totalPrice.toFixed(2)} €</h4>
             <StyledForm onSubmit={handleSubmitOrder}>
               <StyledLabel htmlFor="address">Addresse:</StyledLabel>
               <textarea
-                rows={2}
-                cols={5}
+                rows={3}
                 id="address"
                 name="address"
                 minLength={15}
@@ -179,14 +178,14 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ userName }) => {
               <ButtonContainer>
                 <SyledButton
                   type="button"
-                  onClick={() => setIsShowKasse(!isShowKasse)}
+                  onClick={() => setIsShowCheckout(!isShowCheckout)}
                 >
                   Zurück
                 </SyledButton>
                 <SyledButton type="submit">Weiter</SyledButton>
               </ButtonContainer>
             </StyledForm>
-          </StyledContainer>
+          </CheckoutContainer>
         ) : (
           <StyledContainer>
             <ShoppingCartList
@@ -196,10 +195,10 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ userName }) => {
               handleMinus={handleMinus}
               handlePlus={handlePlus}
             />
-            <h4>Die Gesamtpreis ist: {totalPrice.toFixed(2)} €</h4>
+            <h4>Die Gesamtpreise ist: {totalPrice.toFixed(2)} €</h4>
             <SyledButton
               type="button"
-              onClick={() => setIsShowKasse(!isShowKasse)}
+              onClick={() => setIsShowCheckout(!isShowCheckout)}
             >
               ZUR KASSE
             </SyledButton>
@@ -213,10 +212,22 @@ export default ShoppingCart;
 
 const StyledContainer = styled.div`
   margin: 4em 3% 2em 3%;
-  margin-top: 4em;
+  padding: 1em;
   width: 94%;
   display: flex;
   flex-direction: column;
+`;
+const CheckoutContainer = styled.div`
+  margin: 4em auto 2em auto;
+  padding: 1em;
+  width: 21em;
+  border-radius: 1em;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  @media screen and (min-width: 600px) {
+    width: 30em;
+  }
 `;
 
 const StyledForm = styled.form`
@@ -232,6 +243,7 @@ const StyledLabel = styled.label`
 `;
 
 const ButtonContainer = styled.div`
+  margin-top: 1em;
   display: flex;
   justify-content: space-evenly;
 `;

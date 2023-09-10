@@ -12,4 +12,7 @@
 .slide-in-show {
   transform: translateX(0);
   transition: transform 1s ease-in-out;
+  @media screen and (min-width: 600px) {
+    transform: translateX(-40%);
+  }
 }

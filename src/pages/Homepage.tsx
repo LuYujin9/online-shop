@@ -44,10 +44,10 @@ const Homepage: React.FC<HomepageProps> = ({
           es, dass die Herzen eines jeden Menschen mit Liebe und Geborgenheit
           erfüllt sind :)
         </p>
-        <br />
+
         <StyledLink href="mailto: wuwujane@hotmail.com">
           <RiCustomerService2Fill color="white" fontSize="2em" />
-          KONTACT MICH
+          KONTACTIEREN MICH
         </StyledLink>
         <p>
           Wenn Sie Fragen haben oder individuelle Artikel wünschen,zögern Sie
@@ -69,20 +69,25 @@ export default Homepage;
 const StyledSection = styled.section`
   margin: 4em auto;
   width: 94%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const OwnerImg = styled.img`
+  margin: auto;
   width: 100%;
+  max-width: 30em;
 `;
 
 const LogoImg = styled.img`
-  margin: 0 7%;
+  margin: auto;
   width: 80%;
+  max-width: 20em;
 `;
 
 const StyledLink = styled.a`
   margin: 0.5em auto;
-  width: 12em;
+  width: 15em;
   height: 3em;
   border-radius: 1em;
   color: white;

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-//import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import {
@@ -17,19 +16,8 @@ type HeaderProps = {
 };
 
 const Header = ({ itemCount, isShowCartMessage }: HeaderProps) => {
-  //const [isShowMessage, setIsShowMessage] = useState(false);
-
   const navigate = useNavigate();
   const iconStyles = { color: "white", fontSize: "1.2em" };
-
-  /*   useEffect(() => {
-    if (isShowCartMessage) {
-      setIsShowMessage(true);
-      setTimeout(() => {
-        setIsShowMessage(false);
-      }, 2000);
-    }
-  }, [isShowCartMessage]); */
 
   return (
     <StyledHeader>
@@ -84,11 +72,18 @@ const StyledNav = styled.nav`
   margin: auto;
   margin-right: 0.5rem;
   display: flex;
+  @media screen and (min-width: 600px) {
+    margin-right: 2rem;
+  }
 `;
 
 const StyledNavLink = styled(NavLink)`
   margin: auto;
   padding: 0.3em;
+
+  @media screen and (min-width: 600px) {
+    margin: auto 0.8em;
+  }
 `;
 
 const Styledparagraph = styled.p`

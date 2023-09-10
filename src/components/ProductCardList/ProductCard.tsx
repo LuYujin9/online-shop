@@ -70,6 +70,12 @@ const StyledSection = styled.section`
 const StyledImg = styled.img`
   width: 100%;
   height: 80vw;
+  @media screen and (min-width: 600px) {
+    height: 35vw;
+  }
+  @media screen and (min-width: 900px) {
+    height: 25vw;
+  }
 `;
 
 const DescriptionContainer = styled.div`

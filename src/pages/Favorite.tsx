@@ -34,9 +34,12 @@ const Favorite: React.FC<FavoriteProps> = ({
 
   if (favoriteProducts?.length === 0) {
     return (
-      <h4>
-        Sie haben noch keine gespeicherte Waren oder sich noch nicht angemeldet.
-      </h4>
+      <main>
+        <h5>
+          Sie haben noch keine gespeicherte Waren oder sich noch nicht
+          angemeldet.
+        </h5>
+      </main>
     );
   }
 
