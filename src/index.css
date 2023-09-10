@@ -45,6 +45,11 @@ h1 {
   color: white;
 }
 
+h2 {
+  font-size: 1em;
+  text-align: center;
+}
+
 h3 {
   margin: 0.2em 1em;
   color: var(--color-03);

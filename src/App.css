@@ -1,9 +1,7 @@
-/* style of userAccount */
-.order-list {
-  margin: 1em;
-  width: 15em;
-  height: 8em;
-  background-color: wheat;
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
 }
 
 /* .test {

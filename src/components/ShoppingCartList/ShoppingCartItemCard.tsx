@@ -33,7 +33,7 @@ const ShoppingCartItemCard = ({
             handleShoppingCartItemDelete(product.id);
           }}
         >
-          <FiTrash2 fontSize="2em" />
+          <FiTrash2 fontSize="2em" aria-label="to delete" />
         </DeleteButton>
         <QuantityChangeContainer>
           <StyledButton onClick={() => handleMinus(quantity, product.id)}>
@@ -57,7 +57,7 @@ const CardContainer = styled.div`
   margin: 0 3%;
   padding: 0.5em 0;
   width: 94%;
-  height: 6em;
+  height: 7em;
   border-top: 1px solid var(--color-04);
   border-bottom: 1px solid var(--color-04);
 

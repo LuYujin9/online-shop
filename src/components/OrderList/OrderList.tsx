@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import OrderedItem from "./OrderedItem";
 import { Order } from "../global.type";
 
@@ -10,14 +11,28 @@ const OrderList = ({ orders }: OrderListProps) => {
     <>
       {orders?.map((order: Order) => {
         return (
-          <section key={order.orderNumber} className="order-list">
-            <p>Bestellungsnumber:{order.orderNumber}</p>
-            <p>Datum:{order.date}</p>
+          <CardContainer key={order.orderNumber}>
+            <h4>Bestellungsnumber:</h4>
+            <p>{order.orderNumber}</p>
+            <p>
+              <strong>Datum:</strong> {order.date}
+            </p>
             <OrderedItem oderedItems={order.orderedProducts} />
-          </section>
+          </CardContainer>
         );
       })}
     </>
   );
 };
 export default OrderList;
+
+const CardContainer = styled.div`
+  margin: 1em 3%;
+  padding: 0.3em 0 1em 0;
+  width: 94%;
+  background-color: white;
+  border-radius: 1em;
+
+  display: flex;
+  flex-direction: column;
+`;

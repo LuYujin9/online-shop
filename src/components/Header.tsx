@@ -15,7 +15,7 @@ const Header = () => {
   return (
     <StyledHeader>
       <StyledButton onClick={() => navigate(-1)}>
-        <FiChevronLeft style={iconStyles} aria-lable="back" />
+        <FiChevronLeft style={iconStyles} aria-label="back" />
       </StyledButton>
       <h1>Jin's Handmade</h1>
       <StyledNav>
