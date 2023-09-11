@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useReadLocalStorage } from "usehooks-ts";
@@ -40,33 +41,82 @@ const Details: React.FC<DetailsProps> = ({
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
-    if (product) handleFavorite(product.id, isFavorite, user);
+    if (product && userName) {
+      handleFavorite(product.id, isFavorite, user);
+    } else {
+      alert("Bitte melden Sie sich an.");
+    }
   };
   if (!product) {
     return <p>Ooops, etwas ist false.</p>;
   }
 
   const handleAddToCart = () => {
-    if (userName) handleShopping(product);
+    if (userName) {
+      handleShopping(product);
+    } else {
+      alert("Bitte melden Sie sich an.");
+    }
   };
 
   return (
-    <>
-      <BookmarkButton isFavorite={isFavorite} toggleFavorite={toggleFavorite} />
-      <AddToCartButton handleAddToCart={handleAddToCart} />
-      <h4>{product.name}</h4>
-      <p>{product.stock}</p>
-      <p>{product.price}</p>
-      {product.photos.map((photo) => (
-        <img
-          alt="product photo"
-          src={photo}
-          className="product-photo"
-          key={photo}
-        />
-      ))}
-      <p>{product.description}</p>
-    </>
+    <main>
+      <StyledSection>
+        <DescriptionContainer>
+          <h3>{product.name}</h3>
+          <h4>{product.price} €</h4>
+          <BookmarkButton
+            isFavorite={isFavorite}
+            toggleFavorite={toggleFavorite}
+          />
+          <AddToCartButton handleAddToCart={handleAddToCart} />
+        </DescriptionContainer>
+        <StyledImgContainer>
+          {product.photos.map((photo) => (
+            <StyledImg
+              alt="product photo"
+              src={photo}
+              className="product-photo"
+              key={photo}
+            />
+          ))}
+        </StyledImgContainer>
+        <p>{product.description}</p>
+      </StyledSection>
+    </main>
   );
 };
 export default Details;
+
+const StyledSection = styled.section`
+  margin: 4em auto;
+  width: 94%;
+`;
+
+const DescriptionContainer = styled.div`
+  margin: 0.5em 0;
+  padding: 1em 0;
+  width: 100%;
+  height: 6em;
+  border-radius: 1em;
+  background-color: white;
+  @media screen and (min-width: 600px) {
+ 
+`;
+
+const StyledImgContainer = styled.div`
+  @media screen and (min-width: 600px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 2em;
+    justify-content: center;
+  }
+`;
+
+const StyledImg = styled.img`
+  width: 100%;
+  height: 80vw;
+  @media screen and (min-width: 600px) {
+    height: 40vw;
+  }
+`;

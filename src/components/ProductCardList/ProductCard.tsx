@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useReadLocalStorage } from "usehooks-ts";
 import { NavLink } from "react-router-dom";
@@ -29,30 +30,58 @@ const ProductCard = ({
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
-    handleFavorite(product.id, isFavorite);
+    if (user) {
+      handleFavorite(product.id, isFavorite);
+    } else {
+      alert("Bitte melden Sie sich an.");
+    }
   };
 
   const handleAddToCart = () => {
-    if (user) handleShopping(product);
+    if (user) {
+      handleShopping(product);
+    } else {
+      alert("Bitte melden Sie sich an.");
+    }
   };
 
   return (
-    <>
+    <StyledSection>
+      <NavLink to={`/${product.id}`}>
+        <StyledImg alt="product photo" src={product.photos[0]} />
+      </NavLink>
+      <DescriptionContainer>
+        <h3>{product.price} €</h3>
+        <h4>{product.name}</h4>
+      </DescriptionContainer>
       <BookmarkButton isFavorite={isFavorite} toggleFavorite={toggleFavorite} />
       <AddToCartButton handleAddToCart={handleAddToCart} />
-      <NavLink to={`/${product.id}`}>
-        <section className="product-card">
-          <img
-            alt="product photo"
-            src={product.photos[0]}
-            className="product-photo"
-          />
-          <h4>{product.name}</h4>
-          <p>{product.price}</p>
-        </section>
-      </NavLink>
-    </>
+    </StyledSection>
   );
 };
 
 export default ProductCard;
+
+const StyledSection = styled.section`
+  margin-bottom: 1em;
+  width: 100%;
+`;
+
+const StyledImg = styled.img`
+  width: 100%;
+  height: 80vw;
+  @media screen and (min-width: 600px) {
+    height: 35vw;
+  }
+  @media screen and (min-width: 900px) {
+    height: 25vw;
+  }
+`;
+
+const DescriptionContainer = styled.div`
+  margin: 0;
+  padding: 0.5em 0;
+  width: 100%;
+  border-radius: 1em;
+  background-color: white;
+`;

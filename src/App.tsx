@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
 import { useImmer } from "use-immer";
-import Header from "./components/Header";
+import Header from "./components/Header/Header";
 import Homepage from "./pages/Homepage";
 import ShoppingCart from "./pages/ShoppingCart";
 import Favorite from "./pages/Favorite";
@@ -14,6 +14,8 @@ import { User, Product } from "./components/global.type";
 function App() {
   const [userName, setUserName] = useState<string | null>("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [itemCount, setItemCount] = useState(0);
+  const [isShowCartMessage, setIsShowCartMessage] = useState(false);
   const [users, setUsers] = useLocalStorage<User[] | null>("users", null);
   const [updatedUsers, setUpdatedUsers] = useImmer<User[] | null>(null);
 
@@ -22,6 +24,12 @@ function App() {
       setUsers(updatedUsers);
     }
   }, [updatedUsers, setUsers]);
+
+  useEffect(() => {
+    const itemCount = users?.find((user) => user.name === userName)
+      ?.shoppingCartItems.length;
+    setItemCount(itemCount ? itemCount : 0);
+  }, [users, userName]);
 
   const onUpdateLoginStatus = (userName: string | null) => {
     setUserName(userName);
@@ -61,10 +69,14 @@ function App() {
         }
       }
     });
+    setIsShowCartMessage(true);
+    setTimeout(() => {
+      setIsShowCartMessage(false);
+    }, 3000);
   };
   return (
     <>
-      <Header />
+      <Header itemCount={itemCount} isShowCartMessage={isShowCartMessage} />
       <Routes>
         <Route
           path="/"

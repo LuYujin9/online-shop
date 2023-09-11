@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { useState, useRef, useEffect } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import OrderList from "../components/OrderList/OrderList";
@@ -114,63 +115,72 @@ const UserAccount: React.FC<UserAccountProps> = ({
     <>
       {isLoggedIn ? (
         <main>
-          <p>Hallo,{user?.name}. Wellkommen zurück!</p>
-          <button onClick={hangdleLogout}>Abmelden</button>
-          <OrderList orders={user?.orders} />
+          <StyledContainer>
+            <h2>Hallo,{user?.name}. Wellkommen zurück!</h2>
+            <StyledButton onClick={hangdleLogout}>Abmelden</StyledButton>
+            <OrderList orders={user?.orders} />
+          </StyledContainer>
         </main>
       ) : (
         <main>
           {isShowRegisterForm ? (
-            <section>
-              <button onClick={toggleShowRegisterForm}>Zur Anmeldung</button>
-              <form>
-                <label htmlFor="new-user-name">Benutzername:</label>
-                <input
+            <StyledSection>
+              <StyledButton onClick={toggleShowRegisterForm}>
+                Zur Anmeldung
+              </StyledButton>
+              <StyledForm>
+                <StyledInput
                   type="text"
                   name="userName"
                   id="new-user-name"
                   onChange={handleName}
+                  placeholder="Benutzername"
                   required
                 />
-                <p>{RegisterMessage}</p>
-                <label htmlFor="new-password">Passwort:</label>
-                <input
+
+                <StyledInput
                   type="password"
                   name="password"
                   id="new-password"
                   ref={registerPasswordRef}
+                  placeholder="Passwort"
                   required
                 />
-                <button
+                <SubmitButton
                   type="submit"
                   onClick={(event) => handleRegister(event)}
                 >
                   Registrieren
-                </button>
-              </form>
-            </section>
+                </SubmitButton>
+                <p>{RegisterMessage}</p>
+              </StyledForm>
+            </StyledSection>
           ) : (
-            <div>
-              <section>
-                <form onSubmit={(event) => handleLogin(event)}>
-                  <label htmlFor="user-name">Benutzername:</label>
-                  <input type="text" name="userName" id="user-name" required />
-                  <label htmlFor="password">Passwort:</label>
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    required
-                  />
-                  <button type="submit">Anmelden</button>
-                </form>
-                <p>{userPageMessage}</p>
-              </section>
-              <section>
-                <p>Haben Sie noch kein Konto? Registrieren Sie sich.</p>
-                <button onClick={toggleShowRegisterForm}>Registrieren</button>
-              </section>
-            </div>
+            <StyledSection>
+              <StyledForm onSubmit={(event) => handleLogin(event)}>
+                <StyledInput
+                  type="text"
+                  name="userName"
+                  id="user-name"
+                  placeholder="Benutzername"
+                  required
+                />
+
+                <StyledInput
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Passwort"
+                  required
+                />
+                <SubmitButton type="submit">Anmelden</SubmitButton>
+              </StyledForm>
+              <p>{userPageMessage}</p>
+              <StyledDiv></StyledDiv>
+              <StyledButton onClick={toggleShowRegisterForm}>
+                Registrieren einen Konto
+              </StyledButton>
+            </StyledSection>
           )}
         </main>
       )}
@@ -178,3 +188,66 @@ const UserAccount: React.FC<UserAccountProps> = ({
   );
 };
 export default UserAccount;
+
+const StyledContainer = styled.div`
+  margin: 4em auto;
+  width: 94%;
+
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledSection = styled.section`
+  margin: auto;
+  padding: 1em;
+  width: 20em;
+  border-radius: 0.5em;
+  background-color: white;
+  box-shadow: 1px 1px 15px 4px var(--color--01);
+
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledForm = styled.form`
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledDiv = styled.div`
+  margin: auto;
+  width: 18em;
+  border-bottom: 1px solid var(--color-04);
+`;
+
+const StyledButton = styled.button`
+  margin: 1em auto;
+  width: 14em;
+  height: 3em;
+  border: none;
+  border-radius: 0.5em;
+  color: white;
+  background-color: var(--color-03);
+  font-weight: bold;
+  box-shadow: 1px 1px 1px 1px var(--color-04);
+`;
+
+const SubmitButton = styled.button`
+  margin: 0.5em auto;
+  width: 18em;
+  height: 3em;
+  color: white;
+  background-color: var(--color-04);
+  border: none;
+  border-radius: 0.5em;
+  font-weight: bold;
+`;
+
+const StyledInput = styled.input`
+  margin: 0.5em auto;
+  width: 18em;
+  height: 3em;
+  border: 1px solid var(--color-03);
+  border-radius: 0.5em;
+`;

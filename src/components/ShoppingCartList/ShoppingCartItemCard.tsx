@@ -1,3 +1,6 @@
+import styled from "styled-components";
+import { NavLink } from "react-router-dom";
+import { FiTrash2 } from "react-icons/fi";
 import { Product, User } from "../global.type";
 
 type ShoppingCartItemCardProps = {
@@ -21,32 +24,91 @@ const ShoppingCartItemCard = ({
 
   if (quantity) {
     return (
-      <section>
-        <h4>{product.name}</h4>
-        <img
-          src={product.photos[0]}
-          alt="photo of product"
-          className="product-photo"
-        />
-        <p>Preis: {product.price}€</p>
-        <button onClick={() => handleMinus(quantity, product.id)}>-</button>
-        <p>{quantity}</p>
-        <button onClick={() => handlePlus(product.id)}>+</button>
-        <p>gesamt:{(product.price * quantity).toFixed(2)}€</p>
-        <button
+      <CardContainer>
+        <StyledNavLink to={`/${product.id}`}>
+          <StyledImg src={product.photos[0]} alt="photo of product" />
+        </StyledNavLink>
+        <StyledH4>{product.name}</StyledH4>
+        <StyledParagraph> {product.price} €</StyledParagraph>
+        <DeleteButton
           onClick={() => {
             handleShoppingCartItemDelete(product.id);
           }}
         >
-          Entfern
-        </button>
-      </section>
+          <FiTrash2 fontSize="2em" aria-label="to delete" />
+        </DeleteButton>
+        <QuantityChangeContainer>
+          <StyledButton onClick={() => handleMinus(quantity, product.id)}>
+            -
+          </StyledButton>
+          <p>{quantity}</p>
+          <StyledButton onClick={() => handlePlus(product.id)}>+</StyledButton>
+        </QuantityChangeContainer>
+      </CardContainer>
     );
   } else {
     return (
-      <p>Ooops! Etwas ist kaputt. Bitte kontaktieren Sie die Entwicklerin.</p>
+      <h4>Ooops! Etwas ist kaputt. Bitte kontaktieren Sie die Entwicklerin.</h4>
     );
   }
 };
 
 export default ShoppingCartItemCard;
+
+const CardContainer = styled.div`
+  margin: 0 3%;
+  padding: 0.5em 0;
+  width: 94%;
+  height: 7em;
+  border-top: 1px solid var(--color-04);
+  border-bottom: 1px solid var(--color-04);
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas:
+    "a b d"
+    "a c d"
+    "a e e";
+`;
+
+const StyledNavLink = styled(NavLink)`
+  grid-area: a;
+`;
+
+const StyledImg = styled.img`
+  width: 100%;
+  max-width: 10em;
+  height: 100%;
+  max-height: 6em;
+`;
+
+const StyledH4 = styled.h4`
+  grid-area: b;
+`;
+
+const StyledParagraph = styled.p`
+  grid-area: c;
+`;
+
+const DeleteButton = styled.button`
+  background-color: var(--color-02);
+  border: none;
+  grid-area: d;
+`;
+
+const QuantityChangeContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  grid-area: e;
+`;
+
+const StyledButton = styled.button`
+  margin: auto 1em;
+  width: 1.6em;
+  height: 1.6em;
+  border: none;
+  border-radius: 0.8em;
+  color: white;
+  background-color: var(--color-03);
+`;

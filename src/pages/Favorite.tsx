@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useReadLocalStorage } from "usehooks-ts";
 import ProductCardList from "../components/ProductCardList/ProductCardList";
@@ -33,21 +34,31 @@ const Favorite: React.FC<FavoriteProps> = ({
 
   if (favoriteProducts?.length === 0) {
     return (
-      <p>
-        Sie haben noch keine gespeicherte Waren oder sich noch nicht angemeldet.
-      </p>
+      <main>
+        <h5>
+          Sie haben noch keine gespeicherte Waren oder sich noch nicht
+          angemeldet.
+        </h5>
+      </main>
     );
   }
 
   return (
-    <>
-      <ProductCardList
-        products={favoriteProducts}
-        user={user}
-        handleFavorite={handleFavorite}
-        handleShopping={handleShopping}
-      />
-    </>
+    <main>
+      <StyledSection>
+        <ProductCardList
+          products={favoriteProducts}
+          user={user}
+          handleFavorite={handleFavorite}
+          handleShopping={handleShopping}
+        />
+      </StyledSection>
+    </main>
   );
 };
 export default Favorite;
+
+const StyledSection = styled.section`
+  margin: 4em auto;
+  width: 94%;
+`;
