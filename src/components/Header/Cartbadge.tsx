@@ -6,7 +6,7 @@ type CartBadgeProps = {
 const CartBadge = ({ itemCount }: CartBadgeProps) => {
   return (
     <div>
-      {itemCount > 0 && <Badge>{itemCount > 9 ? "9+" : itemCount}</Badge>}
+      {itemCount > 0 && <Badge>{itemCount > 99 ? "99+" : itemCount}</Badge>}
     </div>
   );
 };

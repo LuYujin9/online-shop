@@ -26,9 +26,16 @@ function App() {
   }, [updatedUsers, setUsers]);
 
   useEffect(() => {
-    const itemCount = users?.find((user) => user.name === userName)
-      ?.shoppingCartItems.length;
-    setItemCount(itemCount ? itemCount : 0);
+    const shoppingCartItems = users?.find(
+      (user) => user.name === userName
+    )?.shoppingCartItems;
+    if (shoppingCartItems) {
+      let itemCount = 0;
+      for (let i = 0; i < shoppingCartItems.length; i++) {
+        itemCount = itemCount + shoppingCartItems[i].quantity;
+      }
+      setItemCount(itemCount);
+    }
   }, [users, userName]);
 
   const onUpdateLoginStatus = (userName: string | null) => {
