@@ -1,4 +1,4 @@
-import "./App.css";
+import "./styles/App.css";
 import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
