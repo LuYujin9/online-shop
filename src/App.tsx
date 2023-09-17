@@ -90,6 +90,7 @@ function App() {
           element={
             <Homepage
               userName={userName}
+              users={users}
               handleFavorite={handleFavorite}
               handleShopping={handleShopping}
             />
@@ -97,13 +98,20 @@ function App() {
         />
         <Route
           path="/shopping-cart"
-          element={<ShoppingCart userName={userName} />}
+          element={
+            <ShoppingCart
+              userName={userName}
+              users={users}
+              setUsers={setUsers}
+            />
+          }
         />
         <Route
           path="/favorite"
           element={
             <Favorite
               userName={userName}
+              users={users}
               handleFavorite={handleFavorite}
               handleShopping={handleShopping}
             />
@@ -114,6 +122,8 @@ function App() {
           element={
             <UserAccount
               userName={userName}
+              users={users}
+              setUsers={setUsers}
               onUpdateLoginStatus={onUpdateLoginStatus}
               isLoggedIn={isLoggedIn}
             />

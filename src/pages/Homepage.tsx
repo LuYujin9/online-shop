@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { useReadLocalStorage } from "usehooks-ts";
 import ProductCardList from "../components/ProductCardList/ProductCardList";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import { products } from "../../public/data";
@@ -8,16 +7,17 @@ import { User, Product } from "../components/global.type";
 
 type HomepageProps = {
   userName: string | null;
+  users: User[] | null;
   handleFavorite: (id: string, isFavorite: boolean) => void;
   handleShopping: (product: Product) => void;
 };
 
 const Homepage: React.FC<HomepageProps> = ({
   userName,
+  users,
   handleFavorite,
   handleShopping,
 }) => {
-  const users = useReadLocalStorage<User[] | null>("users");
   const [user, setUser] = useState<User | undefined>(undefined);
 
   useEffect(() => {
