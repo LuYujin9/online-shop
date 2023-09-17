@@ -1,22 +1,22 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { useReadLocalStorage } from "usehooks-ts";
 import ProductCardList from "../components/ProductCardList/ProductCardList";
 import { products } from "../../public/data";
-import { User, Product } from "../components/global.type";
+import { User, Product } from "../types/global.type";
 
 type FavoriteProps = {
   userName: string | null;
+  users: User[] | null;
   handleFavorite: (id: string, isFavorite: boolean) => void;
   handleShopping: (product: Product) => void;
 };
 
 const Favorite: React.FC<FavoriteProps> = ({
   userName,
+  users,
   handleFavorite,
   handleShopping,
 }) => {
-  const users = useReadLocalStorage<User[] | null>("users");
   const [favoriteProducts, setFavoriteProducts] = useState<
     Product[] | undefined
   >(undefined);

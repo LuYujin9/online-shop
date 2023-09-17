@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useReadLocalStorage } from "usehooks-ts";
-import { Product, User } from "../components/global.type";
+import { Product, User } from "../types/global.type";
 import BookmarkButton from "../components/BookmarkButton";
 import AddToCartButton from "../components/AddToCartButton";
 import { products } from "../../public/data";

@@ -1,25 +1,30 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { useLocalStorage } from "usehooks-ts";
 import { useImmer } from "use-immer";
 import uuid from "react-uuid";
 import { NavLink } from "react-router-dom";
 import ShoppingCartList from "../components/ShoppingCartList/ShoppingCartList";
-import { User } from "../components/global.type";
+import { User } from "../types/global.type";
 import { products } from "../../public/data";
 
 type ShoppingCartProps = {
   userName: string | null;
+  users: User[] | null;
+  setUsers: (newValue: User[] | null) => void;
 };
 
-const ShoppingCart: React.FC<ShoppingCartProps> = ({ userName }) => {
-  const [users, setUsers] = useLocalStorage<User[] | null>("users", null);
-  const [updatedUsers, setUpdatedUsers] = useImmer<User[] | null>(users);
+const ShoppingCart: React.FC<ShoppingCartProps> = ({
+  userName,
+  users,
+  setUsers,
+}) => {
+  const [updatedUsers, setUpdatedUsers] = useImmer<User[]>(users || []);
   const [user, setUser] = useState<User | null>(null);
   const [isShowCheckout, setIsShowCheckout] = useState(false);
   const [cartMessage, setCartMessage] = useState(
     "Sie haben noch keine gespeicherte Waren oder sich noch nicht angemeldet."
   );
+  console.log("users", users);
 
   useEffect(() => {
     if (updatedUsers !== null) {
@@ -59,13 +64,12 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ userName }) => {
         );
       }
     });
-    setUsers(updatedUsers);
   };
 
   const handleMinus = (quantity: number, id: string) => {
     if (quantity > 1) {
       setUpdatedUsers((draft) => {
-        const user = draft?.find((user) => user.name === userName);
+        const user = draft.find((user) => user.name === userName);
         const CartItem = user?.shoppingCartItems.find(
           (item) => item.productId === id
         );
@@ -118,7 +122,6 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ userName }) => {
         user.orders = [...user.orders, newOrder];
       }
     });
-    setUsers(updatedUsers);
     setCartMessage(
       "Erfoglreich bestellt. Bitte überprüfen Sie die Bestellung in Ihrem Konto."
     );

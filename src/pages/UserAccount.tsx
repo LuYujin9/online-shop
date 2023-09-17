@@ -1,21 +1,23 @@
 import styled from "styled-components";
 import { useState, useRef, useEffect } from "react";
-import { useLocalStorage } from "usehooks-ts";
 import OrderList from "../components/OrderList/OrderList";
-import { User } from "../components/global.type";
+import { User } from "../types/global.type";
 
 type UserAccountProps = {
   userName: string | null;
-  onUpdateLoginStatus: (loggedInUserName: string | null) => void;
+  users: User[] | null;
   isLoggedIn: boolean;
+  setUsers: (newValue: User[] | null) => void;
+  onUpdateLoginStatus: (loggedInUserName: string | null) => void;
 };
 
 const UserAccount: React.FC<UserAccountProps> = ({
   userName,
-  onUpdateLoginStatus,
+  users,
   isLoggedIn,
+  setUsers,
+  onUpdateLoginStatus,
 }) => {
-  const [users, setUsers] = useLocalStorage<User[] | null>("users", null);
   const [user, setUser] = useState<User | undefined>(undefined);
   const registerPasswordRef = useRef<HTMLInputElement | null>(null);
   const [registerName, setRegisterName] = useState("");

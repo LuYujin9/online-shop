@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import ProductCard from "./ProductCard";
-import { Product, User } from "../global.type";
+import { Product, User } from "../../types/global.type";
 
 type ProductCardListProps = {
   products: Product[] | undefined;
