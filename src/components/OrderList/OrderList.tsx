@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import OrderedItem from "./OrderedItem";
-import { Order } from "../global.type";
+import { Order } from "../../types/global.type";
 
 type OrderListProps = {
   orders: Order[] | undefined;

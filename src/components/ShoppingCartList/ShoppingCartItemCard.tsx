@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { FiTrash2 } from "react-icons/fi";
-import { Product, User } from "../global.type";
+import { Product, User } from "../../types/global.type";
 
 type ShoppingCartItemCardProps = {
   user: User;

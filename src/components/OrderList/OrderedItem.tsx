@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { itemInfo } from "../global.type";
+import { itemInfo } from "../../types/global.type";
 
 type OrderedItemProps = {
   oderedItems: itemInfo[] | undefined;

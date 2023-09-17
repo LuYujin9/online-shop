@@ -4,7 +4,7 @@ import { useImmer } from "use-immer";
 import uuid from "react-uuid";
 import { NavLink } from "react-router-dom";
 import ShoppingCartList from "../components/ShoppingCartList/ShoppingCartList";
-import { User } from "../components/global.type";
+import { User } from "../types/global.type";
 import { products } from "../../public/data";
 
 type ShoppingCartProps = {

@@ -9,7 +9,7 @@ import ShoppingCart from "./pages/ShoppingCart";
 import Favorite from "./pages/Favorite";
 import UserAccount from "./pages/UserAccount";
 import Details from "./pages/[id]";
-import { User, Product } from "./components/global.type";
+import { User, Product } from "./types/global.type";
 
 function App() {
   const [userName, setUserName] = useState<string | null>("");

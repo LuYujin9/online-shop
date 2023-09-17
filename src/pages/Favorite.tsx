@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import ProductCardList from "../components/ProductCardList/ProductCardList";
 import { products } from "../../public/data";
-import { User, Product } from "../components/global.type";
+import { User, Product } from "../types/global.type";
 
 type FavoriteProps = {
   userName: string | null;

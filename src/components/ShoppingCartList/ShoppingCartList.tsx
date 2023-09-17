@@ -1,5 +1,5 @@
 import ShoppingCartItemCard from "./ShoppingCartItemCard";
-import { User, Product } from "../global.type";
+import { User, Product } from "../../types/global.type";
 
 type ShoppingCartListProps = {
   user: User;

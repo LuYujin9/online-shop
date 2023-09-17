@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState, useRef, useEffect } from "react";
 import OrderList from "../components/OrderList/OrderList";
-import { User } from "../components/global.type";
+import { User } from "../types/global.type";
 
 type UserAccountProps = {
   userName: string | null;

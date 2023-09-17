@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useReadLocalStorage } from "usehooks-ts";
 import { NavLink } from "react-router-dom";
 import BookmarkButton from "../BookmarkButton";
-import { Product, User } from "../global.type";
+import { Product, User } from "../../types/global.type";
 import AddToCartButton from "../AddToCartButton";
 
 type ProductCardProps = {

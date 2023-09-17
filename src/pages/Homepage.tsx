@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import ProductCardList from "../components/ProductCardList/ProductCardList";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import { products } from "../../public/data";
-import { User, Product } from "../components/global.type";
+import { User, Product } from "../types/global.type";
 
 type HomepageProps = {
   userName: string | null;
