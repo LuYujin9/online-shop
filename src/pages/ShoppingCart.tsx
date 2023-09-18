@@ -24,7 +24,6 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
   const [cartMessage, setCartMessage] = useState(
     "Sie haben noch keine gespeicherte Waren oder sich noch nicht angemeldet."
   );
-  console.log("users", users);
 
   useEffect(() => {
     if (updatedUsers !== null) {
