@@ -46,7 +46,7 @@ const UserAccount: React.FC<UserAccountProps> = ({
       toggleIsLoggedIn();
     } else {
       setUserPageMessage(
-        "Benutzername oder Passwort sind falsch, bitte probieren Sie es noch einmal."
+        "Benutzername oder Passwort sind falsch, bitte probieren Sie es noch einmal oder registrieren"
       );
     }
   };
@@ -76,6 +76,7 @@ const UserAccount: React.FC<UserAccountProps> = ({
       setRegisterMessage(
         "Es gibt diesen Benutzernamen bereits. Bitte wählen Sie einen anderen."
       );
+      setRegisterName("");
     } else {
       setRegisterMessage("");
       setRegisterName(newName);
@@ -101,13 +102,13 @@ const UserAccount: React.FC<UserAccountProps> = ({
       };
       onSetNewUser(newUser);
       setUserPageMessage(
-        "Regestierung war erfolgreich.Bitte melden Sie sich jetzt an"
+        "Registierung war erfolgreich.Bitte melden Sie sich jetzt an"
       );
       setRegisterName("");
       setIsShowRegisterForm(false);
     } else {
       setRegisterMessage(
-        "Regestrierung war nicht erfolgreich. Bitte geben Sie einen gültigen Benutzername und Passwort ein."
+        "Registrierung war nicht erfolgreich. Bitte geben Sie einen gültigen Benutzername und Passwort ein."
       );
     }
   };

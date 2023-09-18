@@ -13,8 +13,8 @@ import Details from "./pages/[id]";
 import { User, Product } from "./types/global.type";
 
 function App() {
-  const [userName, setUserName] = useState<string | null>("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState<string | null>(getUserFromLs());
+  const [isLoggedIn, setIsLoggedIn] = useState(userName ? true : false);
   const [itemCount, setItemCount] = useState(0);
   const [isShowCartMessage, setIsShowCartMessage] = useState(false);
   const [users, setUsers] = useLocalStorage<User[] | null>("users", null);
@@ -52,13 +52,14 @@ function App() {
   };
 
   const handleSetNewUser = (newUser: User) => {
-    let updatedUsers;
     if (users) {
-      updatedUsers = [...users, newUser];
+      const newUsers = users;
+      newUsers?.push(newUser);
+      setUpdatedUsers(newUsers);
     } else {
-      updatedUsers = [newUser];
+      const newUsers = [newUser];
+      setUpdatedUsers(newUsers);
     }
-    setUsers(updatedUsers);
   };
 
   const handleFavorite = (id: string, isFavorite: boolean) => {
