@@ -47,7 +47,7 @@ const Homepage: React.FC<HomepageProps> = ({
 
         <StyledLink href="mailto: wuwujane@hotmail.com">
           <RiCustomerService2Fill color="white" fontSize="2em" />
-          KONTACTIEREN MICH
+          KONTACTIEREN SIE MICH
         </StyledLink>
         <p>
           Wenn Sie Fragen haben oder individuelle Artikel wünschen,zögern Sie

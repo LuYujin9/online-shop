@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
 import { useImmer } from "use-immer";
+import { getUserFromLs } from "./helpers/loginAndOut";
 import Header from "./components/Header/Header";
 import Homepage from "./pages/Homepage";
 import ShoppingCart from "./pages/ShoppingCart";
@@ -12,18 +13,24 @@ import Details from "./pages/[id]";
 import { User, Product } from "./types/global.type";
 
 function App() {
-  const [userName, setUserName] = useState<string | null>("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState<string | null>(getUserFromLs());
+  const [isLoggedIn, setIsLoggedIn] = useState(userName ? true : false);
   const [itemCount, setItemCount] = useState(0);
   const [isShowCartMessage, setIsShowCartMessage] = useState(false);
   const [users, setUsers] = useLocalStorage<User[] | null>("users", null);
-  const [updatedUsers, setUpdatedUsers] = useImmer<User[] | null>(null);
+  const [updatedUsers, setUpdatedUsers] = useImmer<User[] | null>(
+    users || null
+  );
 
   useEffect(() => {
     if (updatedUsers !== null) {
       setUsers(updatedUsers);
     }
   }, [updatedUsers, setUsers]);
+
+  useEffect(() => {
+    setUserName(getUserFromLs());
+  }, [isLoggedIn, userName]);
 
   useEffect(() => {
     const shoppingCartItems = users?.find(
@@ -35,12 +42,24 @@ function App() {
         itemCount = itemCount + shoppingCartItems[i].quantity;
       }
       setItemCount(itemCount);
+    } else {
+      setItemCount(0);
     }
   }, [users, userName]);
 
-  const onUpdateLoginStatus = (userName: string | null) => {
-    setUserName(userName);
+  const toggleIsLoggedIn = () => {
     setIsLoggedIn(!isLoggedIn);
+  };
+
+  const handleSetNewUser = (newUser: User) => {
+    if (users) {
+      const newUsers = users;
+      newUsers?.push(newUser);
+      setUpdatedUsers(newUsers);
+    } else {
+      const newUsers = [newUser];
+      setUpdatedUsers(newUsers);
+    }
   };
 
   const handleFavorite = (id: string, isFavorite: boolean) => {
@@ -81,6 +100,7 @@ function App() {
       setIsShowCartMessage(false);
     }, 3000);
   };
+
   return (
     <>
       <Header itemCount={itemCount} isShowCartMessage={isShowCartMessage} />
@@ -123,9 +143,9 @@ function App() {
             <UserAccount
               userName={userName}
               users={users}
-              setUsers={setUsers}
-              onUpdateLoginStatus={onUpdateLoginStatus}
               isLoggedIn={isLoggedIn}
+              onSetNewUser={handleSetNewUser}
+              toggleIsLoggedIn={toggleIsLoggedIn}
             />
           }
         />
