@@ -21,8 +21,11 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
   const [updatedUsers, setUpdatedUsers] = useImmer<User[]>(users || []);
   const [user, setUser] = useState<User | null>(null);
   const [isShowCheckout, setIsShowCheckout] = useState(false);
+  const [isShowNavLink, setIsShowNavLink] = useState(false);
   const [cartMessage, setCartMessage] = useState(
-    "Sie haben noch keine gespeicherte Waren oder sich noch nicht angemeldet."
+    userName
+      ? "Sie haben noch keine gespeicherte Waren."
+      : "Sie haben sich noch nicht angemeldet."
   );
 
   useEffect(() => {
@@ -116,6 +119,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
           orderedProducts: user.shoppingCartItems,
           date: formattedDate,
           adress: newOrderData.address.toString(),
+          totalPrice: totalPrice,
         };
         user.shoppingCartItems = [];
         user.orders = [...user.orders, newOrder];
@@ -124,13 +128,16 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
     setCartMessage(
       "Erfoglreich bestellt. Bitte überprüfen Sie die Bestellung in Ihrem Konto."
     );
+    setIsShowNavLink(true);
   };
 
   if (!user || user.shoppingCartItems.length === 0) {
     return (
       <main>
         <h5>{cartMessage}</h5>
-        <StyledNavLink to="/user-account">Userkonto</StyledNavLink>
+        {isShowNavLink && (
+          <StyledNavLink to="/user-account">Userkonto</StyledNavLink>
+        )}
       </main>
     );
   } else {

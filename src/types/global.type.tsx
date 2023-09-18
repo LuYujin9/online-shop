@@ -18,6 +18,7 @@ export type Order = {
   }[];
   date: string;
   adress: string;
+  totalPrice: number;
 };
 
 export type itemInfo = {
@@ -30,22 +31,7 @@ export type itemInfo = {
 export type User = {
   name: string;
   password: string;
-  orders: {
-    orderNumber: string;
-    orderedProducts: {
-      productId: string;
-      productName: string;
-      photo: string;
-      quantity: number;
-    }[];
-    date: string;
-    adress: string;
-  }[];
+  orders: Order[];
   favorites: string[];
-  shoppingCartItems: {
-    productId: string;
-    productName: string;
-    photo: string;
-    quantity: number;
-  }[];
+  shoppingCartItems: itemInfo[];
 };

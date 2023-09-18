@@ -18,6 +18,7 @@ const OrderList = ({ orders }: OrderListProps) => {
               <strong>Datum:</strong> {order.date}
             </p>
             <OrderedItem oderedItems={order.orderedProducts} />
+            <h4>Gesamtpreis:{order.totalPrice} €</h4>
           </CardContainer>
         );
       })}
