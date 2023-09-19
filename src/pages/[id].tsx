@@ -1,64 +1,56 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useReadLocalStorage } from "usehooks-ts";
-import { Product, User } from "../types/global.type";
 import BookmarkButton from "../components/BookmarkButton";
 import AddToCartButton from "../components/AddToCartButton";
 import { products } from "../../public/data";
+import { Product, User } from "../types/global.type";
 
 type product = Product | undefined;
 
 type DetailsProps = {
   userName: string | null;
-  handleFavorite: (
-    id: string,
-    isFavorite: boolean,
-    user: User | undefined
-  ) => void;
-  handleShopping: (product: Product) => void;
+  user: User | null;
+  onFavorite: (id: string, isFavorite: boolean, user: User | null) => void;
+  onShopping: (product: Product) => void;
 };
 
 const Details: React.FC<DetailsProps> = ({
   userName,
-  handleFavorite,
-  handleShopping,
+  user,
+  onFavorite,
+  onShopping,
 }) => {
   const { id } = useParams();
   const [isFavorite, setIsFavorite] = useState(false);
-  const [user, setUser] = useState<User | undefined>(undefined);
-  const users = useReadLocalStorage<User[] | null>("users");
-
-  const product: product = products.find((product) => product.id == id);
+  const product: product = products.find((product) => product.id === id);
 
   useEffect(() => {
-    const user = users?.find((user) => user.name == userName);
-    setUser(user);
-    if (user && product && user?.favorites.includes(product.id)) {
+    if (id && user?.favorites.includes(id)) {
       setIsFavorite(true);
     }
-  }, [users, userName, product]);
+  }, [id, user]);
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
     if (product && userName) {
-      handleFavorite(product.id, isFavorite, user);
+      onFavorite(product.id, isFavorite, user);
     } else {
       alert("Bitte melden Sie sich an.");
     }
   };
+
+  const handleAddToCart = () => {
+    if (userName && product) {
+      onShopping(product);
+    } else {
+      alert("Bitte melden Sie sich an.");
+    }
+  };
+
   if (!product) {
     return <p>Ooops, etwas ist false.</p>;
   }
-
-  const handleAddToCart = () => {
-    if (userName) {
-      handleShopping(product);
-    } else {
-      alert("Bitte melden Sie sich an.");
-    }
-  };
-
   return (
     <main>
       <StyledSection>

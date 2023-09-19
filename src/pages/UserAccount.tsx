@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { setUserInLs, clearUserInLs } from "../helpers/loginAndOut";
 import OrderList from "../components/OrderList/OrderList";
 import { User } from "../types/global.type";
 
 type UserAccountProps = {
-  userName: string | null;
+  user: User | null;
   users: User[] | null;
   isLoggedIn: boolean;
   onSetNewUser: (newUser: User) => void;
@@ -14,24 +14,18 @@ type UserAccountProps = {
 };
 
 const UserAccount: React.FC<UserAccountProps> = ({
-  userName,
+  user,
   users,
   isLoggedIn,
   onSetNewUser,
   toggleIsLoggedIn,
   onCancelOrder,
 }) => {
-  const [user, setUser] = useState<User | undefined>(undefined);
   const registerPasswordRef = useRef<HTMLInputElement | null>(null);
   const [registerName, setRegisterName] = useState("");
   const [isShowRegisterForm, setIsShowRegisterForm] = useState(false);
   const [RegisterMessage, setRegisterMessage] = useState("");
   const [userPageMessage, setUserPageMessage] = useState("");
-
-  useEffect(() => {
-    const user = users?.find((user) => user.name == userName);
-    setUser(user);
-  }, [users, userName]);
 
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -119,11 +113,13 @@ const UserAccount: React.FC<UserAccountProps> = ({
     <>
       {isLoggedIn ? (
         <main>
-          <StyledContainer>
-            <h2>Hallo,{user?.name}. Wellkommen zurück!</h2>
-            <StyledButton onClick={hangdleLogout}>Abmelden</StyledButton>
-            <OrderList orders={user?.orders} onCancelOrder={onCancelOrder} />
-          </StyledContainer>
+          {user && (
+            <StyledContainer>
+              <h2>Hallo,{user.name}. Wellkommen zurück!</h2>
+              <StyledButton onClick={hangdleLogout}>Abmelden</StyledButton>
+              <OrderList orders={user.orders} onCancelOrder={onCancelOrder} />
+            </StyledContainer>
+          )}
         </main>
       ) : (
         <main>

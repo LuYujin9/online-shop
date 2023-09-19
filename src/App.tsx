@@ -18,6 +18,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(userName ? true : false);
   const [itemCount, setItemCount] = useState(0);
   const [isShowCartMessage, setIsShowCartMessage] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
   const [users, setUsers] = useLocalStorage<User[] | null>("users", null);
   const [updatedUsers, setUpdatedUsers] = useImmer<User[] | null>(
     users || null
@@ -32,6 +33,11 @@ function App() {
   useEffect(() => {
     setUserName(getUserFromLs());
   }, [isLoggedIn, userName]);
+
+  useEffect(() => {
+    const user = users?.find((user) => user.name == userName);
+    user ? setUser(user) : setUser(null);
+  }, [users, userName]);
 
   useEffect(() => {
     const shoppingCartItems = users?.find(
@@ -64,7 +70,6 @@ function App() {
   };
 
   const handleFavorite = (id: string, isFavorite: boolean) => {
-    setUpdatedUsers(users);
     setUpdatedUsers((draft) => {
       const user = draft?.find((user) => user.name === userName);
       if (isFavorite && user) {
@@ -181,7 +186,7 @@ function App() {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth", // 使用平滑滚动
+      behavior: "smooth",
     });
   };
 
@@ -195,8 +200,9 @@ function App() {
             <Homepage
               userName={userName}
               users={users}
-              handleFavorite={handleFavorite}
-              handleShopping={handleShopping}
+              user={user}
+              onFavorite={handleFavorite}
+              onShopping={handleShopping}
             />
           }
         />
@@ -218,9 +224,9 @@ function App() {
           element={
             <Favorite
               userName={userName}
-              users={users}
-              handleFavorite={handleFavorite}
-              handleShopping={handleShopping}
+              user={user}
+              onFavorite={handleFavorite}
+              onShopping={handleShopping}
             />
           }
         />
@@ -228,8 +234,8 @@ function App() {
           path="/user-account"
           element={
             <UserAccount
-              userName={userName}
               users={users}
+              user={user}
               isLoggedIn={isLoggedIn}
               onSetNewUser={handleSetNewUser}
               toggleIsLoggedIn={toggleIsLoggedIn}
@@ -242,8 +248,9 @@ function App() {
           element={
             <Details
               userName={userName}
-              handleFavorite={handleFavorite}
-              handleShopping={handleShopping}
+              user={user}
+              onFavorite={handleFavorite}
+              onShopping={handleShopping}
             />
           }
         />

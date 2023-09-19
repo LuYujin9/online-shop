@@ -3,17 +3,17 @@ import ProductCard from "./ProductCard";
 import { Product, User } from "../../types/global.type";
 
 type ProductCardListProps = {
-  products: Product[] | undefined;
-  user: User | undefined;
-  handleFavorite: (id: string, isFavorite: boolean) => void;
-  handleShopping: (product: Product) => void;
+  products: Product[] | null;
+  user: User | null;
+  onFavorite: (id: string, isFavorite: boolean) => void;
+  onShopping: (product: Product) => void;
 };
 
 const ProductCardList = ({
   products,
   user,
-  handleFavorite,
-  handleShopping,
+  onFavorite,
+  onShopping,
 }: ProductCardListProps) => {
   return (
     <StyledContainer>
@@ -22,8 +22,8 @@ const ProductCardList = ({
           key={product.id}
           product={product}
           user={user}
-          handleFavorite={handleFavorite}
-          handleShopping={handleShopping}
+          onFavorite={onFavorite}
+          onShopping={onShopping}
         />
       ))}
     </StyledContainer>
