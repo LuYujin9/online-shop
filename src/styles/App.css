@@ -16,3 +16,13 @@
     transform: translateX(-40%);
   }
 }
+
+.to-top-button {
+  background-color: var(--color-04);
+  font-size: 2em;
+  border-radius: 0.9em;
+  border: solid 2px rgb(86, 82, 82);
+  position: fixed;
+  bottom: 0.5em;
+  right: 0.5em;
+}

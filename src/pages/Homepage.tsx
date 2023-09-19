@@ -60,7 +60,6 @@ const Homepage: React.FC<HomepageProps> = ({
         handleFavorite={handleFavorite}
         handleShopping={handleShopping}
       />
-      ;
     </main>
   );
 };

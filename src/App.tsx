@@ -24,10 +24,10 @@ function App() {
   );
 
   useEffect(() => {
-    if (updatedUsers !== null) {
+    if (JSON.stringify(updatedUsers) !== JSON.stringify(users)) {
       setUsers(updatedUsers);
     }
-  }, [updatedUsers, setUsers]);
+  }, [updatedUsers, setUsers, users]);
 
   useEffect(() => {
     setUserName(getUserFromLs());
@@ -178,6 +178,13 @@ function App() {
     });
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // 使用平滑滚动
+    });
+  };
+
   return (
     <>
       <Header itemCount={itemCount} isShowCartMessage={isShowCartMessage} />
@@ -241,6 +248,9 @@ function App() {
           }
         />
       </Routes>
+      <button onClick={scrollToTop} className="to-top-button">
+        🔝
+      </button>
     </>
   );
 }
