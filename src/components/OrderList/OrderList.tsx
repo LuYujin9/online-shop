@@ -4,9 +4,10 @@ import { Order } from "../../types/global.type";
 
 type OrderListProps = {
   orders: Order[] | undefined;
+  onCancelOrder: (orderNumber: string) => void;
 };
 
-const OrderList = ({ orders }: OrderListProps) => {
+const OrderList = ({ orders, onCancelOrder }: OrderListProps) => {
   return (
     <>
       {orders?.map((order: Order) => {
@@ -18,6 +19,10 @@ const OrderList = ({ orders }: OrderListProps) => {
               <strong>Datum:</strong> {order.date}
             </p>
             <OrderedItem oderedItems={order.orderedProducts} />
+            <h4>Gesamtpreis:{order.totalPrice.toFixed(2)} €</h4>
+            <StyledButton onClick={() => onCancelOrder(order.orderNumber)}>
+              Stonieren
+            </StyledButton>
           </CardContainer>
         );
       })}
@@ -35,4 +40,16 @@ const CardContainer = styled.div`
 
   display: flex;
   flex-direction: column;
+`;
+
+const StyledButton = styled.button`
+  margin: 1em auto;
+  width: 10em;
+  height: 2em;
+  border: none;
+  border-radius: 0.5em;
+  color: white;
+  background-color: var(--color-03);
+  font-weight: bold;
+  box-shadow: 1px 1px 1px 1px var(--color-04);
 `;

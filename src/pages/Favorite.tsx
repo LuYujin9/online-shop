@@ -36,8 +36,9 @@ const Favorite: React.FC<FavoriteProps> = ({
     return (
       <main>
         <h5>
-          Sie haben noch keine gespeicherte Waren oder sich noch nicht
-          angemeldet.
+          {userName
+            ? "Sie haben noch keine gespeicherte Waren."
+            : "Sie haben sich noch nicht angemeldet."}
         </h5>
       </main>
     );
