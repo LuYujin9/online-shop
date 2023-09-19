@@ -6,17 +6,17 @@ import { Product, User } from "../../types/global.type";
 type ShoppingCartItemCardProps = {
   user: User;
   product: Product;
-  handleShoppingCartItemDelete: (id: string) => void;
-  handleMinus: (quantity: number, id: string) => void;
-  handlePlus: (id: string) => void;
+  onDeleteItemInCart: (id: string) => void;
+  onReduceQuantityInCart: (quantity: number, id: string) => void;
+  onIncreaseQuantityInCart: (id: string) => void;
 };
 
 const ShoppingCartItemCard = ({
   user,
   product,
-  handleShoppingCartItemDelete,
-  handleMinus,
-  handlePlus,
+  onDeleteItemInCart,
+  onReduceQuantityInCart,
+  onIncreaseQuantityInCart,
 }: ShoppingCartItemCardProps) => {
   const quantity = user.shoppingCartItems.find(
     (item) => item.productId === product.id
@@ -32,17 +32,21 @@ const ShoppingCartItemCard = ({
         <StyledParagraph> {product.price} €</StyledParagraph>
         <DeleteButton
           onClick={() => {
-            handleShoppingCartItemDelete(product.id);
+            onDeleteItemInCart(product.id);
           }}
         >
           <FiTrash2 fontSize="2em" aria-label="to delete" />
         </DeleteButton>
         <QuantityChangeContainer>
-          <StyledButton onClick={() => handleMinus(quantity, product.id)}>
+          <StyledButton
+            onClick={() => onReduceQuantityInCart(quantity, product.id)}
+          >
             -
           </StyledButton>
           <p>{quantity}</p>
-          <StyledButton onClick={() => handlePlus(product.id)}>+</StyledButton>
+          <StyledButton onClick={() => onIncreaseQuantityInCart(product.id)}>
+            +
+          </StyledButton>
         </QuantityChangeContainer>
       </CardContainer>
     );

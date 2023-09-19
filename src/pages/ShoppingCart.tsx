@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { useImmer } from "use-immer";
-import uuid from "react-uuid";
 import { NavLink } from "react-router-dom";
 import ShoppingCartList from "../components/ShoppingCartList/ShoppingCartList";
 import { User } from "../types/global.type";
@@ -10,15 +8,20 @@ import { products } from "../../public/data";
 type ShoppingCartProps = {
   userName: string | null;
   users: User[] | null;
-  setUsers: (newValue: User[] | null) => void;
+  onDeleteItemInCart: (id: string) => void;
+  onReduceQuantityInCart: (quantity: number, id: string) => void;
+  onIncreaseQuantityInCart: (id: string) => void;
+  onSetNewOrder: (address: string, totalPrice: number) => void;
 };
 
 const ShoppingCart: React.FC<ShoppingCartProps> = ({
   userName,
   users,
-  setUsers,
+  onDeleteItemInCart,
+  onReduceQuantityInCart,
+  onIncreaseQuantityInCart,
+  onSetNewOrder,
 }) => {
-  const [updatedUsers, setUpdatedUsers] = useImmer<User[]>(users || []);
   const [user, setUser] = useState<User | null>(null);
   const [isShowCheckout, setIsShowCheckout] = useState(false);
   const [isShowNavLink, setIsShowNavLink] = useState(false);
@@ -27,12 +30,6 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
       ? "Sie haben noch keine gespeicherte Waren."
       : "Sie haben sich noch nicht angemeldet."
   );
-
-  useEffect(() => {
-    if (updatedUsers !== null) {
-      setUsers(updatedUsers);
-    }
-  }, [updatedUsers, setUsers]);
 
   useEffect(() => {
     const user = users?.find((user) => user.name === userName);
@@ -57,74 +54,14 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
   }
   const totalPrice = eachItemTotalPrices.reduce((a, b) => a + b);
 
-  const handleShoppingCartItemDelete = (id: string) => {
-    setUpdatedUsers((draft) => {
-      const user = draft?.find((user) => user.name === userName);
-      if (user) {
-        user.shoppingCartItems = user.shoppingCartItems.filter(
-          (item) => item.productId !== id
-        );
-      }
-    });
-  };
-
-  const handleMinus = (quantity: number, id: string) => {
-    if (quantity > 1) {
-      setUpdatedUsers((draft) => {
-        const user = draft.find((user) => user.name === userName);
-        const CartItem = user?.shoppingCartItems.find(
-          (item) => item.productId === id
-        );
-        if (user && CartItem) {
-          const itemIndex = user.shoppingCartItems.findIndex(
-            (item) => item.productId === id
-          );
-          user.shoppingCartItems[itemIndex].quantity--;
-        }
-      });
-    }
-  };
-
-  const handlePlus = (id: string) => {
-    setUpdatedUsers((draft) => {
-      const user = draft?.find((user) => user.name === userName);
-      const CartItem = user?.shoppingCartItems.find(
-        (item) => item.productId === id
-      );
-      if (user && CartItem) {
-        const itemIndex = user.shoppingCartItems.findIndex(
-          (item) => item.productId === id
-        );
-        user.shoppingCartItems[itemIndex].quantity++;
-      }
-    });
-  };
-
   const handleSubmitOrder: React.FormEventHandler<HTMLFormElement> = (
     event
   ) => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
     const newOrderData = Object.fromEntries(formData);
-    setUpdatedUsers((draft) => {
-      const user = draft?.find((user) => user.name === userName);
-      if (user) {
-        const currentDate = new Date();
-        const year = currentDate.getFullYear();
-        const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-        const day = String(currentDate.getDate()).padStart(2, "0");
-        const formattedDate = `${day}-${month}-${year}`;
-        const newOrder = {
-          orderNumber: uuid(),
-          orderedProducts: user.shoppingCartItems,
-          date: formattedDate,
-          adress: newOrderData.address.toString(),
-          totalPrice: totalPrice,
-        };
-        user.shoppingCartItems = [];
-        user.orders = [...user.orders, newOrder];
-      }
-    });
+    const address = newOrderData.address.toString();
+    onSetNewOrder(address, totalPrice);
     setCartMessage(
       "Erfoglreich bestellt. Bitte überprüfen Sie die Bestellung in Ihrem Konto."
     );
@@ -198,11 +135,11 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
         ) : (
           <StyledContainer>
             <ShoppingCartList
-              handleShoppingCartItemDelete={handleShoppingCartItemDelete}
+              onDeleteItemInCart={onDeleteItemInCart}
               user={user}
               inCartProducts={inCartProducts}
-              handleMinus={handleMinus}
-              handlePlus={handlePlus}
+              onReduceQuantityInCart={onReduceQuantityInCart}
+              onIncreaseQuantityInCart={onIncreaseQuantityInCart}
             />
             <h4>Die Gesamtpreise ist: {totalPrice.toFixed(2)} €</h4>
             <SyledButton

@@ -1,4 +1,5 @@
 import "./styles/App.css";
+import uuid from "react-uuid";
 import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
@@ -101,6 +102,82 @@ function App() {
     }, 3000);
   };
 
+  const handelCancelOrder = (orderNumber: string) => {
+    setUpdatedUsers((draft) => {
+      const user = draft?.find((user) => user.name === userName);
+      if (user) {
+        user.orders = user.orders.filter(
+          (order) => order.orderNumber !== orderNumber
+        );
+      }
+    });
+  };
+
+  const handleDeleteItemInCart = (id: string) => {
+    setUpdatedUsers((draft) => {
+      const user = draft?.find((user) => user.name === userName);
+      if (user) {
+        user.shoppingCartItems = user.shoppingCartItems.filter(
+          (item) => item.productId !== id
+        );
+      }
+    });
+  };
+
+  const handleReduceQuantityInCart = (quantity: number, id: string) => {
+    if (quantity > 1) {
+      setUpdatedUsers((draft) => {
+        const user = draft?.find((user) => user.name === userName);
+        const CartItem = user?.shoppingCartItems.find(
+          (item) => item.productId === id
+        );
+        if (user && CartItem) {
+          const itemIndex = user.shoppingCartItems.findIndex(
+            (item) => item.productId === id
+          );
+          user.shoppingCartItems[itemIndex].quantity--;
+        }
+      });
+    }
+  };
+
+  const handleIncreaseQuantityInCart = (id: string) => {
+    setUpdatedUsers((draft) => {
+      const user = draft?.find((user) => user.name === userName);
+      const CartItem = user?.shoppingCartItems.find(
+        (item) => item.productId === id
+      );
+      if (user && CartItem) {
+        const itemIndex = user.shoppingCartItems.findIndex(
+          (item) => item.productId === id
+        );
+        user.shoppingCartItems[itemIndex].quantity++;
+      }
+    });
+  };
+
+  const handleSetNewOrder = (address: string, totalPrice: number) => {
+    setUpdatedUsers((draft) => {
+      const user = draft?.find((user) => user.name === userName);
+      if (user) {
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+        const day = String(currentDate.getDate()).padStart(2, "0");
+        const formattedDate = `${day}-${month}-${year}`;
+        const newOrder = {
+          orderNumber: uuid(),
+          orderedProducts: user.shoppingCartItems,
+          date: formattedDate,
+          adress: address,
+          totalPrice: totalPrice,
+        };
+        user.shoppingCartItems = [];
+        user.orders = [...user.orders, newOrder];
+      }
+    });
+  };
+
   return (
     <>
       <Header itemCount={itemCount} isShowCartMessage={isShowCartMessage} />
@@ -122,7 +199,10 @@ function App() {
             <ShoppingCart
               userName={userName}
               users={users}
-              setUsers={setUsers}
+              onDeleteItemInCart={handleDeleteItemInCart}
+              onReduceQuantityInCart={handleReduceQuantityInCart}
+              onIncreaseQuantityInCart={handleIncreaseQuantityInCart}
+              onSetNewOrder={handleSetNewOrder}
             />
           }
         />
@@ -146,6 +226,7 @@ function App() {
               isLoggedIn={isLoggedIn}
               onSetNewUser={handleSetNewUser}
               toggleIsLoggedIn={toggleIsLoggedIn}
+              onCancelOrder={handelCancelOrder}
             />
           }
         />

@@ -10,6 +10,7 @@ type UserAccountProps = {
   isLoggedIn: boolean;
   onSetNewUser: (newUser: User) => void;
   toggleIsLoggedIn: () => void;
+  onCancelOrder: (orderNumber: string) => void;
 };
 
 const UserAccount: React.FC<UserAccountProps> = ({
@@ -18,6 +19,7 @@ const UserAccount: React.FC<UserAccountProps> = ({
   isLoggedIn,
   onSetNewUser,
   toggleIsLoggedIn,
+  onCancelOrder,
 }) => {
   const [user, setUser] = useState<User | undefined>(undefined);
   const registerPasswordRef = useRef<HTMLInputElement | null>(null);
@@ -120,7 +122,7 @@ const UserAccount: React.FC<UserAccountProps> = ({
           <StyledContainer>
             <h2>Hallo,{user?.name}. Wellkommen zurück!</h2>
             <StyledButton onClick={hangdleLogout}>Abmelden</StyledButton>
-            <OrderList orders={user?.orders} />
+            <OrderList orders={user?.orders} onCancelOrder={onCancelOrder} />
           </StyledContainer>
         </main>
       ) : (
