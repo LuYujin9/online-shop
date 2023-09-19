@@ -1,30 +1,66 @@
 import styled from "styled-components";
-import { itemInfo } from "../../types/global.type";
+import { Order } from "../../types/global.type";
 
 type OrderedItemProps = {
-  oderedItems: itemInfo[] | null;
+  order: Order | null;
+  onCancelOrder: (orderNumber: string) => void;
 };
 
-const OrderedItem = ({ oderedItems }: OrderedItemProps) => {
-  return (
-    <>
-      {oderedItems?.map((item) => {
-        return (
-          <ItemsContainer key={item.productId}>
-            <StyledImg
-              src={item.photo}
-              alt="a photo of ordered product"
-              className="product-photo"
-            />
-            <StyledH4>Name: {item.productName}</StyledH4>
-            <StyledParagraph>Menge: {item.quantity}</StyledParagraph>
-          </ItemsContainer>
-        );
-      })}
-    </>
-  );
+const OrderedItem = ({ order, onCancelOrder }: OrderedItemProps) => {
+  if (order)
+    return (
+      <>
+        <CardContainer key={order.orderNumber}>
+          <h4>Bestellungsnumber:</h4>
+          <p>{order.orderNumber}</p>
+          <p>
+            <strong>Datum:</strong> {order.date}
+          </p>
+          {order.orderedProducts?.map((product) => {
+            return (
+              <ItemsContainer key={product.productId}>
+                <StyledImg
+                  src={product.photo}
+                  alt="a photo of ordered product"
+                  className="product-photo"
+                />
+                <StyledH4>{product.productName}</StyledH4>
+                <StyledParagraph>Menge: {product.quantity}</StyledParagraph>
+              </ItemsContainer>
+            );
+          })}
+          <h4>Gesamtpreis:{order.totalPrice.toFixed(2)} €</h4>
+          <StyledButton onClick={() => onCancelOrder(order.orderNumber)}>
+            Stonieren
+          </StyledButton>
+        </CardContainer>
+      </>
+    );
 };
 export default OrderedItem;
+
+const CardContainer = styled.div`
+  margin: 1em 3%;
+  padding: 0.3em 0 1em 0;
+  width: 94%;
+  background-color: white;
+  border-radius: 1em;
+
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledButton = styled.button`
+  margin: 1em auto;
+  width: 10em;
+  height: 2em;
+  border: none;
+  border-radius: 0.5em;
+  color: white;
+  background-color: var(--color-03);
+  font-weight: bold;
+  box-shadow: 1px 1px 1px 1px var(--color-04);
+`;
 
 const ItemsContainer = styled.div`
   margin: 0 3%;

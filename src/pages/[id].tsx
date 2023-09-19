@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import BookmarkButton from "../components/BookmarkButton";
 import AddToCartButton from "../components/AddToCartButton";
@@ -23,7 +23,13 @@ const Details: React.FC<DetailsProps> = ({
 }) => {
   const { id } = useParams();
   const [isFavorite, setIsFavorite] = useState(false);
-  const product: product = products.find((product) => product.id == id);
+  const product: product = products.find((product) => product.id === id);
+
+  useEffect(() => {
+    if (id && user?.favorites.includes(id)) {
+      setIsFavorite(true);
+    }
+  }, [id, user]);
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
