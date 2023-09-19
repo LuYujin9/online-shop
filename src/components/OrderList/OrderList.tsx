@@ -3,7 +3,7 @@ import OrderedItem from "./OrderedItem";
 import { Order } from "../../types/global.type";
 
 type OrderListProps = {
-  orders: Order[] | undefined;
+  orders: Order[] | null;
   onCancelOrder: (orderNumber: string) => void;
 };
 

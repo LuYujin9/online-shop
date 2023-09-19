@@ -6,31 +6,30 @@ import { User, Product } from "../types/global.type";
 
 type FavoriteProps = {
   userName: string | null;
-  users: User[] | null;
-  handleFavorite: (id: string, isFavorite: boolean) => void;
-  handleShopping: (product: Product) => void;
+  user: User | null;
+  onFavorite: (id: string, isFavorite: boolean) => void;
+  onShopping: (product: Product) => void;
 };
 
 const Favorite: React.FC<FavoriteProps> = ({
   userName,
-  users,
-  handleFavorite,
-  handleShopping,
+  user,
+  onFavorite,
+  onShopping,
 }) => {
-  const [favoriteProducts, setFavoriteProducts] = useState<
-    Product[] | undefined
-  >(undefined);
-  const [user, setUser] = useState<User | undefined>(undefined);
+  const [favoriteProducts, setFavoriteProducts] = useState<Product[] | null>(
+    null
+  );
 
   useEffect(() => {
-    const user = users?.find((user) => user.name == userName);
-    setUser(user);
     const favorites = user?.favorites;
     const filteredProducts = products.filter((product) =>
       favorites?.find((favorite) => favorite === product.id)
     );
-    setFavoriteProducts(filteredProducts);
-  }, [users, userName]);
+    filteredProducts
+      ? setFavoriteProducts(filteredProducts)
+      : setFavoriteProducts(null);
+  }, [user, userName]);
 
   if (favoriteProducts?.length === 0) {
     return (
@@ -50,8 +49,8 @@ const Favorite: React.FC<FavoriteProps> = ({
         <ProductCardList
           products={favoriteProducts}
           user={user}
-          handleFavorite={handleFavorite}
-          handleShopping={handleShopping}
+          onFavorite={onFavorite}
+          onShopping={onShopping}
         />
       </StyledSection>
     </main>

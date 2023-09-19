@@ -1,30 +1,22 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
 import ProductCardList from "../components/ProductCardList/ProductCardList";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import { products } from "../../public/data";
 import { User, Product } from "../types/global.type";
 
 type HomepageProps = {
+  user: User | null;
   userName: string | null;
   users: User[] | null;
-  handleFavorite: (id: string, isFavorite: boolean) => void;
-  handleShopping: (product: Product) => void;
+  onFavorite: (id: string, isFavorite: boolean) => void;
+  onShopping: (product: Product) => void;
 };
 
 const Homepage: React.FC<HomepageProps> = ({
-  userName,
-  users,
-  handleFavorite,
-  handleShopping,
+  user,
+  onFavorite,
+  onShopping,
 }) => {
-  const [user, setUser] = useState<User | undefined>(undefined);
-
-  useEffect(() => {
-    const user = users?.find((user) => user.name == userName);
-    setUser(user);
-  }, [users, userName]);
-
   return (
     <main>
       <StyledSection>
@@ -57,8 +49,8 @@ const Homepage: React.FC<HomepageProps> = ({
       <ProductCardList
         products={products}
         user={user}
-        handleFavorite={handleFavorite}
-        handleShopping={handleShopping}
+        onFavorite={onFavorite}
+        onShopping={onShopping}
       />
     </main>
   );

@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { useReadLocalStorage } from "usehooks-ts";
 import { NavLink } from "react-router-dom";
 import BookmarkButton from "../BookmarkButton";
 import { Product, User } from "../../types/global.type";
@@ -8,30 +7,29 @@ import AddToCartButton from "../AddToCartButton";
 
 type ProductCardProps = {
   product: Product;
-  user: User | undefined;
-  handleFavorite: (id: string, isFavorite: boolean) => void;
-  handleShopping: (product: Product) => void;
+  user: User | null;
+  onFavorite: (id: string, isFavorite: boolean) => void;
+  onShopping: (product: Product) => void;
 };
 
 const ProductCard = ({
   product,
   user,
-  handleFavorite,
-  handleShopping,
+  onFavorite,
+  onShopping,
 }: ProductCardProps) => {
   const [isFavorite, setIsFavorite] = useState(false);
-  const users: User[] | null = useReadLocalStorage("users");
 
   useEffect(() => {
     if (user?.favorites.includes(product.id)) {
       setIsFavorite(true);
     }
-  }, [product.id, user, users]);
+  }, [product.id, user]);
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
     if (user) {
-      handleFavorite(product.id, isFavorite);
+      onFavorite(product.id, isFavorite);
     } else {
       alert("Bitte melden Sie sich an.");
     }
@@ -39,7 +37,7 @@ const ProductCard = ({
 
   const handleAddToCart = () => {
     if (user) {
-      handleShopping(product);
+      onShopping(product);
     } else {
       alert("Bitte melden Sie sich an.");
     }

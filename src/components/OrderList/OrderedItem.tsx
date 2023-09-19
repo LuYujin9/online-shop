@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { itemInfo } from "../../types/global.type";
 
 type OrderedItemProps = {
-  oderedItems: itemInfo[] | undefined;
+  oderedItems: itemInfo[] | null;
 };
 
 const OrderedItem = ({ oderedItems }: OrderedItemProps) => {
