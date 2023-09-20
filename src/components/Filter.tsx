@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { useState } from "react";
 
 type FilterProps = {
@@ -36,16 +37,16 @@ const Filter = ({ onSetFilteredProducts }: FilterProps) => {
   };
 
   return (
-    <>
-      <label htmlFor="filter">Sortieren nach:</label>
-      <select id="filter" onChange={handleFilterChange}>
+    <FilterContainer>
+      <StyledLabel htmlFor="filter">Sortieren nach:</StyledLabel>
+      <StyledSelect id="filter" onChange={handleFilterChange}>
         <option value="recommendation">Empfolen</option>
         <option value="price ascending">Preis:Aufsteigend</option>
         <option value="price descending">Preis:Absteigend</option>
         <option value="new arrivals first">Neuheiten</option>
-      </select>
+      </StyledSelect>
       <label>
-        <input
+        <StyledInput
           type="checkbox"
           name="wallet"
           value="wallet"
@@ -54,7 +55,7 @@ const Filter = ({ onSetFilteredProducts }: FilterProps) => {
         Geldbörse
       </label>
       <label>
-        <input
+        <StyledInput
           type="checkbox"
           name="cardholder"
           value="cardholder"
@@ -63,7 +64,7 @@ const Filter = ({ onSetFilteredProducts }: FilterProps) => {
         Kartenhalter
       </label>
       <label>
-        <input
+        <StyledInput
           type="checkbox"
           name="pendant"
           value="pendant"
@@ -72,7 +73,7 @@ const Filter = ({ onSetFilteredProducts }: FilterProps) => {
         Anhänger
       </label>
       <label>
-        <input
+        <StyledInput
           type="checkbox"
           name="bag"
           value="bag"
@@ -80,8 +81,35 @@ const Filter = ({ onSetFilteredProducts }: FilterProps) => {
         />
         Tasche
       </label>
-    </>
+    </FilterContainer>
   );
 };
 
 export default Filter;
+
+const FilterContainer = styled.section`
+  margin: 1em auto;
+  padding: 0 1em;
+  width: 94%;
+  border-radius: 1em;
+  border: solid 3px var(--color-04);
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+`;
+const StyledLabel = styled.label`
+  font-weight: bold;
+`;
+
+const StyledSelect = styled.select`
+  margin: 1em;
+  width: 12em;
+  height: 2em;
+  border-radius: 5px;
+  background-color: var(--color-01);
+`;
+
+const StyledInput = styled.input`
+  accent-color: var(--color-05);
+`;
