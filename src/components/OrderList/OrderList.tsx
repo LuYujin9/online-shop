@@ -7,12 +7,17 @@ type OrderListProps = {
 };
 
 const OrderList = ({ orders, onCancelOrder }: OrderListProps) => {
-  return (
-    <>
-      {orders?.map((order: Order) => (
-        <OrderedItem order={order} onCancelOrder={onCancelOrder} />
-      ))}
-    </>
-  );
+  if (orders)
+    return (
+      <>
+        {orders.map((order: Order) => (
+          <OrderedItem
+            key={order.orderNumber}
+            order={order}
+            onCancelOrder={onCancelOrder}
+          />
+        ))}
+      </>
+    );
 };
 export default OrderList;

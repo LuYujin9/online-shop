@@ -1,6 +1,8 @@
 import styled from "styled-components";
+import { useState } from "react";
 import ProductCardList from "../components/ProductCardList/ProductCardList";
 import { RiCustomerService2Fill } from "react-icons/ri";
+import Filter from "../components/Filter";
 import { products } from "../../public/data";
 import { User, Product } from "../types/global.type";
 
@@ -17,6 +19,29 @@ const Homepage: React.FC<HomepageProps> = ({
   onFavorite,
   onShopping,
 }) => {
+  const [productsList, setProductsList] = useState<Product[]>(products);
+
+  const handleSetFilteredProducts = (
+    selectValue: string,
+    checkboxesValues: string[]
+  ) => {
+    const filteredProducts = products.filter((product) =>
+      checkboxesValues.includes(product.sort)
+    );
+    if (selectValue) {
+      if (selectValue === "price ascending") {
+        filteredProducts.sort((a, b) => a.price - b.price);
+        setProductsList(filteredProducts);
+      } else if (selectValue === "price descending") {
+        filteredProducts.sort((a, b) => b.price - a.price);
+        setProductsList(filteredProducts);
+      } else if (selectValue === "new arrivals first") {
+        filteredProducts.reverse();
+      }
+    }
+    setProductsList(filteredProducts);
+  };
+
   return (
     <main>
       <StyledSection>
@@ -46,8 +71,9 @@ const Homepage: React.FC<HomepageProps> = ({
           nicht, mich jetzt zu kontaktieren!
         </p>
       </StyledSection>
+      <Filter onSetFilteredProducts={handleSetFilteredProducts} />
       <ProductCardList
-        products={products}
+        products={productsList}
         user={user}
         onFavorite={onFavorite}
         onShopping={onShopping}
