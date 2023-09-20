@@ -1,7 +1,8 @@
 export const products = [
   {
     id: "1",
-    name: "Produkt 1",
+    name: "Produkt 1 ",
+    sort: "wallet",
     description:
       "Eine detaillierte Beschreibung dieses tollen Produkts. Dieses Produkt hat viele großartige Funktionen und Vorteile. Es ist in verschiedenen Farben und Größen erhältlich.",
     stock: 10,
@@ -12,6 +13,7 @@ export const products = [
   {
     id: "2",
     name: "Produkt 2",
+    sort: "wallet",
     description:
       "Eine ausführliche Beschreibung dieses großartigen Produkts. Dieses Produkt ist in Schwarz und Weiß erhältlich und hat eine bequeme Passform.",
     stock: 5,
@@ -27,6 +29,7 @@ export const products = [
   {
     id: " 3",
     name: "Produkt 3",
+    sort: "pendant",
     description:
       "Eine umfassende Beschreibung dieses fantastischen Produkts. Es ist in verschiedenen lebendigen Farben und Größen erhältlich, um Ihren Bedürfnissen gerecht zu werden.",
     stock: 20,
@@ -37,6 +40,7 @@ export const products = [
   {
     id: "4",
     name: "Produkt 4",
+    sort: "cardholder",
     description:
       "Eine detaillierte Beschreibung dieses tollen Produkts. Dieses Produkt hat viele großartige Funktionen und Vorteile. Es ist in verschiedenen Farben und Größen erhältlich.",
     stock: 10,
@@ -47,26 +51,29 @@ export const products = [
   {
     id: "5",
     name: "Produkt 5",
+    sort: "pendant",
     description:
       "Eine ausführliche Beschreibung dieses großartigen Produkts. Dieses Produkt ist in Schwarz und Weiß erhältlich und hat eine bequeme Passform.",
     stock: 5,
     comments: ["Sehr empfehlenswert"],
     photos: ["/images/product5-1.jpg", "/images/product5-2.jpg"],
-    price: 19.99,
+    price: 19.89,
   },
   {
     id: "6",
     name: "Produkt 6",
+    sort: "cardholder",
     description:
       "Eine umfassende Beschreibung dieses fantastischen Produkts. Es ist in verschiedenen lebendigen Farben und Größen erhältlich, um Ihren Bedürfnissen gerecht zu werden.",
     stock: 20,
     comments: ["Sehr empfehlenswert"],
     photos: ["/images/product6-1.jpg", "/images/product6-2.jpg"],
-    price: 29.99,
+    price: 29.89,
   },
   {
     id: " 7",
     name: "Produkt 7",
+    sort: "bag",
     description:
       "Eine umfassende Beschreibung dieses fantastischen Produkts. Es ist in verschiedenen lebendigen Farben und Größen erhältlich, um Ihren Bedürfnissen gerecht zu werden.",
     stock: 20,
@@ -77,26 +84,29 @@ export const products = [
   {
     id: "8",
     name: "Produkt 8",
+    sort: "cardholder",
     description:
       "Eine detaillierte Beschreibung dieses tollen Produkts. Dieses Produkt hat viele großartige Funktionen und Vorteile. Es ist in verschiedenen Farben und Größen erhältlich.",
     stock: 10,
     comments: ["Gutes Produkt", "Sehr zufrieden"],
     photos: ["/images/product8-1.jpg", "/images/product8-2.jpg"],
-    price: 39.99,
+    price: 39.89,
   },
   {
     id: "9",
     name: "Produkt 9",
+    sort: "pendant",
     description:
       "Eine ausführliche Beschreibung dieses großartigen Produkts. Dieses Produkt ist in Schwarz und Weiß erhältlich und hat eine bequeme Passform.",
     stock: 5,
     comments: ["Sehr empfehlenswert"],
     photos: ["/images/product9-1.jpg"],
-    price: 19.99,
+    price: 19.79,
   },
   {
     id: "10",
     name: "Produkt 10",
+    sort: "wallet",
     description:
       "Eine umfassende Beschreibung dieses fantastischen Produkts. Es ist in verschiedenen lebendigen Farben und Größen erhältlich, um Ihren Bedürfnissen gerecht zu werden.",
     stock: 20,
@@ -107,7 +117,7 @@ export const products = [
       "/images/product10-3.jpg",
       "/images/product10-4.jpg",
     ],
-    price: 29.99,
+    price: 29.79,
   },
 ];
 

@@ -2,40 +2,37 @@ import styled from "styled-components";
 import { Order } from "../../types/global.type";
 
 type OrderedItemProps = {
-  order: Order | null;
+  order: Order;
   onCancelOrder: (orderNumber: string) => void;
 };
 
 const OrderedItem = ({ order, onCancelOrder }: OrderedItemProps) => {
-  if (order)
-    return (
-      <>
-        <CardContainer key={order.orderNumber}>
-          <h4>Bestellungsnumber:</h4>
-          <p>{order.orderNumber}</p>
-          <p>
-            <strong>Datum:</strong> {order.date}
-          </p>
-          {order.orderedProducts?.map((product) => {
-            return (
-              <ItemsContainer key={product.productId}>
-                <StyledImg
-                  src={product.photo}
-                  alt="a photo of ordered product"
-                  className="product-photo"
-                />
-                <StyledH4>{product.productName}</StyledH4>
-                <StyledParagraph>Menge: {product.quantity}</StyledParagraph>
-              </ItemsContainer>
-            );
-          })}
-          <h4>Gesamtpreis:{order.totalPrice.toFixed(2)} €</h4>
-          <StyledButton onClick={() => onCancelOrder(order.orderNumber)}>
-            Stonieren
-          </StyledButton>
-        </CardContainer>
-      </>
-    );
+  return (
+    <CardContainer>
+      <h4>Bestellungsnumber:</h4>
+      <p>{order.orderNumber}</p>
+      <p>
+        <strong>Datum:</strong> {order.date}
+      </p>
+      {order.orderedProducts?.map((product) => {
+        return (
+          <ItemsContainer key={product.productId}>
+            <StyledImg
+              src={product.photo}
+              alt="a photo of ordered product"
+              className="product-photo"
+            />
+            <StyledH4>{product.productName}</StyledH4>
+            <StyledParagraph>Menge: {product.quantity}</StyledParagraph>
+          </ItemsContainer>
+        );
+      })}
+      <h4>Gesamtpreis:{order.totalPrice.toFixed(2)} €</h4>
+      <StyledButton onClick={() => onCancelOrder(order.orderNumber)}>
+        Stonieren
+      </StyledButton>
+    </CardContainer>
+  );
 };
 export default OrderedItem;
 
